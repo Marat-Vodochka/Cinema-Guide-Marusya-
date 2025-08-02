@@ -1,0 +1,31 @@
+.button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #3a7de0;
+}
+
+.button--dark {
+  background-color: #2d2d2d;
+  color: white;
+}
+
+.button--dark:hover {
+  background-color: #1f1f1f;
+}
+
+.button_icon {
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border-radius: 50%;
+  background-color: #1d1d1d;
+}

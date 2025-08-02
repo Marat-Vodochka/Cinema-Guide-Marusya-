@@ -1,0 +1,1 @@
+<h1>Genre Details Page</h1>

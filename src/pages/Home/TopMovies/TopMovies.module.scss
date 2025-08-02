@@ -1,0 +1,82 @@
+.top {
+overflow: hidden;
+  background-color: transparent;
+  width: 100%;
+
+  @media (max-width: 767px) {
+    padding: 20px;
+    width: 100%;
+
+  }
+
+  &__title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 64px;
+
+    @media (max-width: 767px) {
+      margin-bottom: 40px;
+      font-size: 24px;
+    }
+  }
+
+  &__grid {
+    // Desktop styles
+    display: grid;
+    grid-template-columns: repeat(5, 224px);
+    justify-content: center;
+    gap: 64px 40px;
+    width: 100%;
+
+
+    // Mobile styles - completely override desktop
+    @media (max-width: 767px) {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      overflow-y: hidden;
+      grid-template-columns: repeat(10, 1fr);
+      justify-content: flex-start !important;
+      gap: 16px;
+      margin: 0 -20px;
+      padding: 0 20px;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      width: 100%;
+      min-height: 240px;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+
+      // Force all direct children to be flex items
+      >* {
+        flex: 0 0 160px !important;
+        width: 160px !important;
+        min-width: 160px !important;
+        max-width: 160px !important;
+        scroll-snap-align: start;
+        margin-right: 0 !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+      }
+
+      // Ensure the last card has proper spacing
+      >*:last-child {
+        margin-right: 20px !important;
+      }
+    }
+  }
+}
+
+.status {
+  text-align: center;
+  color: #ccc;
+  font-size: 18px;
+  margin: 60px 0;
+}

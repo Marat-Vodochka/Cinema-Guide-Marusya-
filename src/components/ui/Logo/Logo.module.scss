@@ -1,0 +1,18 @@
+.logo_wrapper {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  cursor: pointer;
+
+  @media (max-width:767px) {
+    gap: 6.5px;
+  }
+}
+
+.logo__icon {
+  width: 24px;
+}
+
+.logo__iconText {
+  height: 18px;
+}
