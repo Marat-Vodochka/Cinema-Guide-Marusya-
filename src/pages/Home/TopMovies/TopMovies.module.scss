@@ -43,7 +43,7 @@ overflow: hidden;
       padding: 0 20px;
       scroll-snap-type: x mandatory;
       scroll-behavior: smooth;
-      width: 100%;
+      width: 100vh;
       min-height: 240px;
 
       &::-webkit-scrollbar {
