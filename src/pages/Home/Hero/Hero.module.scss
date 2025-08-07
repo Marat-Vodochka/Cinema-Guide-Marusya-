@@ -165,6 +165,7 @@
     border-radius: 16px;
     overflow: hidden;
     max-height: 552px;
+    width: 680px;
     max-width: 680px;
 
     @media (max-width: 767px) {
@@ -177,6 +178,7 @@
   &__poster {
     max-width: 680px;
     max-height: 552px;
+    width: 680px;
     object-fit: cover;
     display: block;
 

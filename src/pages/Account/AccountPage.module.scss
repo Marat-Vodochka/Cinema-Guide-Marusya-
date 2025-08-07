@@ -1,0 +1,300 @@
+.wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding-top: 48px;
+
+  @media (max-width: 767px) {
+   padding: 16px 20px 0 20px;
+  }
+}
+
+.title {
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 64px;
+
+  @media (max-width: 767px) {
+    font-size: 24px;
+    margin-bottom: 40px;
+  }
+}
+
+.tabs {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 40px;
+
+  @media (max-width: 767px) {
+    margin-bottom: 40px;
+    gap: 24px;
+  }
+}
+
+.tab, .tabActive {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #fff;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  position: relative;
+  padding-bottom: 8px;
+
+  @media (max-width: 767px) {
+    gap: 8px;
+  }
+}
+
+.tabActive {
+  border-bottom: 2px solid #B4A9FF;
+}
+
+.tabIcon {
+  width: 24px;
+  height: 24px;
+  fill: white;
+}
+
+.tabText {
+  display: inline;
+}
+
+.tabTextMobile {
+  display: none;
+  font-size: 24px;
+}
+
+@media (max-width: 768px) {
+  .tabText {
+    display: none;
+  }
+  
+  .tabTextMobile {
+    display: inline;
+  }
+}
+
+.userInfo {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: unset;
+  gap: 16px;
+
+  @media (max-width: 767px) {
+    gap: 40px;
+    
+  }
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #6c6c6c;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 767px) {
+    width: 48px;
+    height: 48px;
+    font-size: 18px;
+    
+  }
+}
+
+.infoRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  fill: white;
+}
+
+.label {
+  font-size: 14px;
+  color: #bdbdbd;
+}
+
+.value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+
+  @media (max-width: 767px) {
+    font-size: 16px;
+  }
+}
+
+.logoutBtn {
+  width: 262px;
+  height: 56px;
+  margin-top: 32px;
+  padding: 14px 40px;
+  background: #6caaff;
+  color: #fff;
+  border: none;
+  border-radius: 24px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+  &:hover {
+    background: #4a8be8;
+  }
+
+  @media (max-width: 767px) {
+    width: 100%;
+    height: 48px;
+    font-size: 16px;
+    padding: 12px 24px;
+    border-radius: 28px;
+    margin-top: 0;
+  }
+}
+
+.favoritesContainer {
+  width: 100%;
+  overflow: hidden;
+}
+
+.favoritesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(224px, 1fr));
+  gap: 20px;
+  padding: 20px 0;
+  padding-top: 32px;
+  padding-right: 16px;
+}
+
+.card {
+  position: relative;
+  border-radius: 8px;
+  background: #1a1a1a;
+  transition: transform 0.2s ease;
+  width: 224px;
+  height: 336px;
+
+  &:hover {
+    transform: scale(1.02);
+    
+    .removeBtn {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.removeBtn {
+  position: absolute;
+  top: -8px; 
+  right: -8px; 
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: scale(1.1);
+  }
+
+  @media (max-width: 767px) {
+    transition: all 0.2s ease;
+  }
+}
+
+.removeIcon {
+  width: 12px;
+  height: 12px;
+  fill: #333;
+}
+
+@media (max-width: 768px) {
+  .favoritesContainer {
+    margin: 0 -20px;
+    padding: 0 20px;
+  }
+
+  .favoritesGrid {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 16px 0; 
+    padding-right: 32px;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .card {
+    flex: 0 0 224px;
+    min-width: 224px;
+    width: 224px;
+    height: 336px;
+
+    &:hover {
+      .removeBtn {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+
+    &:active {
+      .removeBtn {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+
+  .cardImage {
+    border-radius: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .favoritesGrid {
+    padding-right: 28px;
+  }
+
+  .card {
+    flex: 0 0 150px;
+    min-width: 150px;
+    width: 150px;
+    height: 225px;
+  }
+}

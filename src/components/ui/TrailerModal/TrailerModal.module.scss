@@ -1,0 +1,101 @@
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 22, 40, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: #23243a;
+  border-radius: 18px;
+  padding: 32px 24px 24px 24px;
+  position: relative;
+  min-width: 960px;
+  max-width: 540px;
+  box-shadow: 0 8px 32px #0008;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 0;    
+  right: -48px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background-color: white;
+  color: #181f2a;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.removeIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.noTrailer {
+  color: #fff;
+  text-align: center;
+  font-size: 1.2rem;
+  padding: 40px 0;
+}
+
+.videoContainer {
+  position: relative;
+  width: 100%;
+}
+
+.videoOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.playPauseBtn {
+  background-color: white;
+  border: none;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 0.3s;
+  
+  svg {
+    width: 40px;
+    height: 40px;
+    fill: white;
+  }
+}
+
+.videoTitle {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  z-index: 11;
+}

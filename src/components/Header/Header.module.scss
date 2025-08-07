@@ -6,6 +6,7 @@
 
   @media (max-width: 767px) {
     padding: 16px 0px;
+    margin: 0 20px;
   }
 }
 
@@ -17,6 +18,7 @@
   gap: 80px;
 
   @media (max-width: 767px) {
+    max-width: 335px;
     gap: 16px;
   }
 }
@@ -34,7 +36,7 @@
 
 .nav {
   display: flex;
-  gap: 24px;
+  gap: 40px;
 
   @media (max-width: 767px) {
     display: none;
@@ -74,6 +76,17 @@
   }
 }
 
+.navBlock {
+  flex-direction: row;
+  align-items: center;
+  gap: 40px;
+  max-width: 970px;
+
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+
 .actions {
   display: flex;
   align-items: center;
@@ -87,6 +100,12 @@
 .loginButton {
   background-color: unset;
   color: white;
+  font-family: Play;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 24px;
+  line-height: 32px;
+
 
   @media (max-width: 767px) {
     display: none;
@@ -94,40 +113,149 @@
 }
 
 
-.center > .searchInput {
-  flex: 1;
-  max-width: 400px;
+.searchInput {
+  position: relative;
+  width: 655px;
+  padding: 14px 24px;
+  font-size: 20px;
+  border-radius: 12px;
+  border: none;
+  background-color: #393B3C;
+  color: #fff;
+  outline: none;
+  margin-bottom: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: border 0.2s;
+  font-family: inherit;
 
-  @media (max-width: 767px) {
-    max-width: none;
-    flex: none;
-    width: 100%;
-    display: none; 
+  &::placeholder {
+    color: #bdbdbd;
+    font-size: 18px;
+    opacity: 1;
   }
 }
+
 
 .mobileIcons {
   display: none;
 
   @media (max-width: 767px) {
     display: flex;
-    gap: 20px;
     align-items: center;
+    gap: 20px;
   }
 }
 
-
-.mobileIcons .iconButton {
+.iconButton {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 32px;
   height: 32px;
+  background: none;
+  border: none;
   cursor: pointer;
+  fill: white;
+  text-decoration: none;
+  padding: 0;
 
   svg {
     width: 24px;
     height: 24px;
     fill: white;
   }
+
+  &:hover {
+    opacity: 0.8;
+  }
 }
+
+// Имя пользователя тоже скрываем на мобильных
+.userName {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+
+.dropdown {
+  width: 559px;
+  position: absolute;
+  top: 87px;
+  left: 45%;
+  right: 15%;
+  background-color: #393B3C;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+  z-index: 100;
+  padding: 8px 0;
+  margin: 0;
+  list-style: none;
+}
+
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.15s;
+  width: 543px;
+  height: 92px;
+  gap: 16px;
+
+  img {
+    width: 40px;
+    height: 52px;
+    object-fit: cover;
+    border-radius: 6px;
+    background: #181f2a;
+  }
+
+
+  &:hover {
+    background: #222a3f;
+  }
+}
+
+.itemRow{
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+
+.itemInfo{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ratingWrap {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #308E21;
+  border-radius: 16px;
+  width: 47px;
+  height: 20px;
+  padding: 2px 8px;
+  opacity: 1;
+}
+
+.ratingStar {
+  color: #fff;
+  font-size: 10px;
+  line-height: 1;
+}
+
+.ratingValue {
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+

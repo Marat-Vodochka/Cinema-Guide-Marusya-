@@ -1,11 +1,14 @@
-import Hero from "./Hero/Hero";
+import styles from "../../styles/main.module.scss";
 import TopMovies from "./TopMovies/TopMovies";
+import Hero from "./Hero/Hero";
 
-export default function HomePage() {
+const HomePage = () => {
   return (
-    <>
+    <div className={styles["app-wrapper"]}>
       <Hero />
       <TopMovies />
-    </>
+    </div>
   );
-}
+};
+
+export default HomePage;

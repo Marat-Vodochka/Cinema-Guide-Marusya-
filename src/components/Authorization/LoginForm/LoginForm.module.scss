@@ -1,0 +1,124 @@
+.form {
+  background-color: #FFFFFF;
+  padding: 64px 40px;
+  border-radius: 16px;
+  min-width: 420px;
+  min-height: 450px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  gap: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+
+  @media (max-width: 768px) {
+    padding: 64px 20px 32px 20px;
+    min-width: 335px;
+    min-height: 100%;
+  }
+}
+
+.logo_wrapper img {
+  margin-bottom: 16px;
+  display: block;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  img,
+  svg {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+    fill: #888888; 
+    transition: fill 0.3s ease;
+  }
+}
+
+.inputWrapperError {
+  input {
+    border: 1.5px solid #ff4d4f !important;
+  }
+
+  img,
+  svg {
+    fill: #ff4d4f !important;
+  }
+}
+
+.input {
+  padding: 12px 16px 12px 40px; 
+  border-radius: 6px;
+  border: 1px solid #555;
+  background-color: #FFFFFF;
+  color: black;
+  font-size: 14px;
+  width: 340px;
+  height: 56px;
+  box-sizing: border-box;
+
+  &::placeholder {
+    color: #bbb;
+    font-family: Play, sans-serif;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+}
+
+.errorIcon {
+  position: absolute;
+  right: 12px;
+  color: #ff4d4f;
+  font-weight: bold;
+  font-size: 18px;
+  user-select: none;
+  pointer-events: none;
+}
+
+.button {
+  width: 100%;
+  min-height: 56px;
+  background-color: #6ea1ff;
+  border: none;
+  padding: 12px 0;
+  border-radius: 28px;
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #5b8de1;
+  }
+}
+
+.registerText {
+  text-align: center;
+  color: black;
+  cursor: pointer;
+  font-weight: 600;
+  user-select: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

@@ -3,28 +3,31 @@
   display: flex;
   flex-direction: column;
   background-color: #1e1e1e;
-  box-shadow: 0px 0px 80px 0px #FFFFFF54;
   border-radius: 16px;
   transition: transform 0.3s ease;
   cursor: pointer;
-  width: 100%;
-            height: 100%;
+  width: 224px;  
+  height: 336px;
   overflow: visible;
+  
 
 
   @media (max-width: 767px) {
-            width: 100%;
-            height: 100%;
             object-fit: cover;
             align-self: stretch;
+            background-color: transparent !important;
+            box-shadow: none !important;
+            width: 224px;
+            height: 336px;
   }
-
-   // Hover effect
-
-
 
   &:hover {
     transform: translateY(-4px);
+
+    @media (max-width: 767px) {
+      transform: translateY(0);
+      
+    }
    }
 
    &__inner {
@@ -32,6 +35,8 @@
     overflow: hidden; 
     display: flex;
     flex-direction: column;
+    height: 100%;
+    width: 224px;
   }
 
   &__rank {
@@ -42,7 +47,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 28px;
+    height: 48px;
+      min-width: 62px;
     white-space: nowrap;
     height: 32px;
     background-color: #fff;
@@ -58,12 +64,13 @@
     padding: 0 8px;
 
     @media (max-width: 767px) {
-      font-size: 18px;
-      height: 24px;
-      min-width: 24px;
-      top: -8px;
-      left: -8px;
+      font-size: 24px;
+      height: 48px;
+      min-width: 62px;
+      top: -12px;
+      left: -12px;
       z-index: 10;
+      border-radius: 50px;
     }
   }
 
@@ -93,5 +100,19 @@
   &__rating {
     font-size: 14px;
     color: #aaaaaa;
+  }
+}
+
+.cardFullWidth {
+  @media (max-width: 767px) {
+    width: 100% !important;
+    
+    .card__inner {
+      width: 100% !important;
+    }
+
+    button {
+      display: none !important;
+    }
   }
 }

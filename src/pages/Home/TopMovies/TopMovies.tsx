@@ -24,7 +24,7 @@ const TopMovies = () => {
       <h2 className={s.top__title}>Топ 10 фильмов</h2>
       <div className={s.top__grid}>
         {list.slice(0, 10).map((m, i) => (
-          <MovieCard key={m.id} movie={m} rank={i + 1} />
+          <MovieCard key={m.id} movie={m} rank={i + 1} showRank={true}/>
         ))}
       </div>
     </section>
