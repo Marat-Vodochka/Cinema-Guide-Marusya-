@@ -40,9 +40,8 @@ const GenresPage = () => {
     fetch("https://cinemaguide.skillbox.cc/movie/genres")
       .then(res => res.json())
       .then(data => {
-        console.log(data); // Посмотрите, какие жанры приходят
         const genresWithImages = data.map((genre: string) => ({
-          name: genre.charAt(0).toUpperCase() + genre.slice(1), // Первая буква большая
+          name: genre.charAt(0).toUpperCase() + genre.slice(1),
           image: genreImages[genre.toLowerCase()] || new URL("../../assets/images/genre/genre-fantasy.jpg", import.meta.url).href,
         }));
         setGenres(genresWithImages);
@@ -51,19 +50,21 @@ const GenresPage = () => {
   }, []);
 
   const handleGenreClick = (genre: string) => {
-    navigate(`/movies?genre=${genre.toLowerCase()}`); // Отправляем в нижнем регистре для API
+    navigate(`/movies?genre=${genre.toLowerCase()}`);
   };
 
   return (
-    <div className={s.genresWrapper}>
-      <h1 className={s.title}>Жанры</h1>
-      <div className={s.cards}>
-        {genres.map(genre => (
-          <div key={genre.name} className={s.card} onClick={() => handleGenreClick(genre.name)}>
-            <img src={genre.image} alt={genre.name} className={s.cardImage} />
-            <div className={s.cardName}>{genre.name}</div>
-          </div>
-        ))}
+    <div className={s.container}>
+      <div className={s.genresWrapper}>
+        <h1 className={s.title}>Жанры</h1>
+        <div className={s.cards}>
+          {genres.map(genre => (
+            <div key={genre.name} className={s.card} onClick={() => handleGenreClick(genre.name)}>
+              <img src={genre.image} alt={genre.name} className={s.cardImage} />
+              <div className={s.cardName}>{genre.name}</div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

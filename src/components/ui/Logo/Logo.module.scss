@@ -1,11 +1,12 @@
 .logo_wrapper {
   display: flex;
   gap: 12px;
-  align-items: flex-end;
+  align-items: center;
   cursor: pointer;
 
   @media (max-width:767px) {
     gap: 6.5px;
+    align-items: center;
   }
 }
 

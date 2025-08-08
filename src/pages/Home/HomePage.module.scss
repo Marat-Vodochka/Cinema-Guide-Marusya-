@@ -1,0 +1,20 @@
+.container {
+  padding: 0 80px;
+
+  @media (max-width: 768px) {
+    max-width: none;
+    padding: 0 20px;
+  }
+}
+
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+
+  @media (max-width: 768px) {
+    gap: 60px;
+    padding: 20px 0;
+  }
+}

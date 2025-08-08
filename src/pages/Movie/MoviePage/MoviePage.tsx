@@ -2,7 +2,6 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import MovieCard from "../../../components/MovieCard/MovieCard";
 import s from "./MoviePage.module.scss";
-import { addToFavorites } from "../../../services/movieService";
 
 const MoviesPage = () => {
   const [searchParams] = useSearchParams();
@@ -39,30 +38,29 @@ const MoviesPage = () => {
   const handleShowMore = () => setPage(prev => prev + 1);
 
   return (
-    <div className={s.wrapper}>
-      <div className={s.headerRow}>
-        <button className={s.backBtn} onClick={() => navigate(-1)} aria-label="Назад">
-          &lt;
-        </button>
-        <h1 className={s.title}>{genre ? genre.charAt(0).toUpperCase() + genre.slice(1) : ''}</h1>
+    <div className={s.container}>
+      <div className={s.wrapper}>
+        <div className={s.headerRow}>
+          <button className={s.backBtn} onClick={() => navigate(-1)} aria-label="Назад">
+            &lt;
+          </button>
+          <h1 className={s.title}>{genre ? genre.charAt(0).toUpperCase() + genre.slice(1) : ''}</h1>
+        </div>
+        <div className={s.cards}>
+          {movies.map(movie => (
+            <MovieCard
+              key={movie.id}
+              movie={movie}
+              fullWidth={true}
+            />
+          ))}
+        </div>
+        {hasMore && (
+          <button className={s.showMoreBtn} onClick={handleShowMore}>
+            Показать ещё
+          </button>
+        )}
       </div>
-      <div className={s.cards}>
-        {movies.map(movie => (
-          <MovieCard
-            key={movie.id}
-            movie={movie}
-            fullWidth={true}
-            onAddFavorite={async () => {
-              await addToFavorites(movie.id);
-            }}
-          />
-        ))}
-      </div>
-      {hasMore && (
-        <button className={s.showMoreBtn} onClick={handleShowMore}>
-          Показать ещё
-        </button>
-      )}
     </div>
   );
 };

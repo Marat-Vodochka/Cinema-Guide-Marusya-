@@ -12,11 +12,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <div className="app-wrapper">
-          <UserProvider>
-            <App />
-          </UserProvider>
-        </div>
+        <UserProvider>
+          <App />
+        </UserProvider>
       </BrowserRouter>
     </QueryClientProvider>
   </React.StrictMode>

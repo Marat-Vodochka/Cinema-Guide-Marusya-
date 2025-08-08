@@ -1,42 +1,33 @@
 .header {
   width: 100%;
-  padding: 24px 80px;
+  padding: 24px 0; // Убираем боковые отступы, они будут в контейнере
   background-color: unset;
   color: white;
 
   @media (max-width: 767px) {
-    padding: 16px 0px;
-    margin: 0 20px;
+    padding: 16px 0;
   }
 }
 
 .container {
   max-width: 1200px;
+  padding: 0 80px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 80px;
 
   @media (max-width: 767px) {
-    max-width: 335px;
+    max-width: none;
+    padding: 0 20px;
     gap: 16px;
-  }
-}
-
-.center {
-  display: flex;
-  align-items: center;
-  gap: 40px;
-  flex: 1;
-
-  @media (max-width: 767px) {
-    gap: 12px;
   }
 }
 
 .nav {
   display: flex;
   gap: 40px;
+  align-items: center;
 
   @media (max-width: 767px) {
     display: none;
@@ -106,12 +97,10 @@
   font-size: 24px;
   line-height: 32px;
 
-
   @media (max-width: 767px) {
     display: none;
   }
 }
-
 
 .searchInput {
   position: relative;
@@ -134,7 +123,6 @@
     opacity: 1;
   }
 }
-
 
 .mobileIcons {
   display: none;

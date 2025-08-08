@@ -118,7 +118,10 @@ const Hero = () => {
               Трейлер
             </Button>
             <div className={s.buttonsRow}>
-              <Button className={`${s.hero__btn} ${s.btnAbout}`} onClick={handleAboutClick}>
+              <Button
+                className= {s.hero__btn} 
+                onClick={handleAboutClick}
+              >
                 О фильме
               </Button>
               <Button

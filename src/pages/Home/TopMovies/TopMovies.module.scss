@@ -16,12 +16,12 @@
     font-weight: 700;
     color: #ffffff;
     margin-bottom: 64px;
-    text-align: left;   // уберите или замените на left
+    text-align: left;
 
     @media (max-width: 767px) {
       margin-bottom: 20px;
       font-size: 24px;
-      padding-left: 20px; // аналогично мобильному отступу
+      padding-left: 20px;
     }
   }
 
@@ -29,7 +29,7 @@
     display: grid;
     grid-template-columns: repeat(5, 224px);
     justify-content: center;
-    gap: 64px 40px;
+    gap: 64px 23px;
     width: 100%;
     background: transparent;
     padding-left: 24px;
