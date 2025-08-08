@@ -1,6 +1,6 @@
 .header {
   width: 100%;
-  padding: 24px 0; // Убираем боковые отступы, они будут в контейнере
+  padding: 24px 0;
   background-color: unset;
   color: white;
 
@@ -10,12 +10,12 @@
 }
 
 .container {
-  max-width: 1200px;
-  padding: 0 80px;
+   max-width: 100%;
+  padding: 0 80px; /* 1280 - 160 = 1120px (1105px занято) */
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 80px;
+  gap: 10px; 
 
   @media (max-width: 767px) {
     max-width: none;
@@ -126,6 +126,15 @@
 
 .mobileIcons {
   display: none;
+
+  @media (max-width: 1024px) {
+    max-width: 400px; /* Уменьшаем для планшетов */
+  }
+
+  @media (max-width: 767px) {
+    max-width: 100%; /* На мобильных — на всю ширину */
+    padding: 10px 16px;
+  }
 
   @media (max-width: 767px) {
     display: flex;
