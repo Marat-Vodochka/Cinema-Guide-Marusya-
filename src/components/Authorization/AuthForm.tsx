@@ -1,47 +1,41 @@
 import { useState } from "react";
-import Modal from "../Modal/Modal";
 import LoginForm from "./LoginForm/LoginForm";
 import RegisterForm from "./RegisterForm/RegisterForm";
+import s from "./AuthForm.module.scss";
+import type { LoginData } from "./LoginForm/LoginForm";
 
-type LoginData = {
-  email: string;
-  password: string;
-};
-
-type RegisterData = {
-  name: string;
-  email: string;
-  password: string;
-};
-
-type AuthModalProps = {
+type AuthFormProps = {
   isOpen: boolean;
   onClose: () => void;
-  onLogin: (data: LoginData) => void;    // объект с email и password
-  onRegister: (data: RegisterData) => void;  // объект с name, email, password
+  onLogin: (data: LoginData) => void;
+  onRegister: (email: string, password: string) => void;
 };
 
-const AuthModal = ({ isOpen, onClose, onLogin, onRegister }: AuthModalProps) => {
-  const [authMode, setAuthMode] = useState<"login" | "register">("login");
+const AuthForm = ({ isOpen, onClose, onLogin, onRegister }: AuthFormProps) => {
+  const [isLogin, setIsLogin] = useState(true);
 
-  const switchToLogin = () => setAuthMode("login");
-  const switchToRegister = () => setAuthMode("register");
+  if (!isOpen) return null;
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      {authMode === "login" && (
-        <LoginForm onLogin={onLogin} onSwitchToRegister={switchToRegister} />
-      )}
-      {authMode === "register" && (
-  <RegisterForm
-    onRegister={(name, email, password) =>
-      onRegister({ name, email, password })
-    }
-    onSwitchToLogin={switchToLogin}
-  />
-)}
-    </Modal>
+    <div className={s.overlay} onClick={onClose}>
+      <div className={s.modal} onClick={(e) => e.stopPropagation()}>
+        <button className={s.closeBtn} onClick={onClose}>
+          ×
+        </button>
+        {isLogin ? (
+          <LoginForm
+            onSwitchToRegister={() => setIsLogin(false)}
+            onLogin={onLogin}
+          />
+        ) : (
+          <RegisterForm
+            onRegister={onRegister}
+            onSwitchToLogin={() => setIsLogin(true)}
+          />
+        )}
+      </div>
+    </div>
   );
 };
 
-export default AuthModal;
+export default AuthForm;
