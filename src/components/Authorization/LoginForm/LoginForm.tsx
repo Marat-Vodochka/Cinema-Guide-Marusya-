@@ -6,9 +6,8 @@ import EmailIcon from "../../../assets/icons/icon-email.svg?react";
 import PasswordIcon from "../../../assets/icons/icon-password.svg?react";
 import FormField from "../../ui/FormField/FormField";
 import { useMutation } from "@tanstack/react-query";
-import { login } from "../../../services/User";
+import { login, fetchMe } from "../../../services/User";
 import { useUser } from "../../Authorization/UserContext";
-import { fetchMe } from "../../../services/User";
 
 export type LoginData = {
   email: string;

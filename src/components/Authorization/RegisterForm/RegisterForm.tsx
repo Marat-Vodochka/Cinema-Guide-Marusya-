@@ -17,8 +17,14 @@ type RegisterData = {
   confirmPassword: string;
 };
 
+export type RegisterDataForAuth = {
+  email: string;
+  password: string;
+  name?: string;
+};
+
 type RegisterFormProps = {
-  onRegister: (email: string, password: string) => void;
+  onRegister: (data: RegisterDataForAuth) => void;
   onSwitchToLogin: () => void;
 };
 
@@ -45,7 +51,12 @@ const RegisterForm: FC<RegisterFormProps> = ({
   const mutation = useMutation<void, Error, RegisterData>({
     mutationFn: registerUser,
     onSuccess: () => {
-      onRegister(formData.email, formData.password); // Autologin after registration
+      // Автовход после регистрации — передаём объект
+      onRegister({
+        email: formData.email,
+        password: formData.password,
+        name: formData.name,
+      });
     },
     onError: (error: Error) => {
       alert(error.message || "Registration error");
@@ -73,6 +84,7 @@ const RegisterForm: FC<RegisterFormProps> = ({
   const submitHandler = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
+    // Отправляем на API всю форму — как и раньше
     mutation.mutate(formData);
   };
 
@@ -126,7 +138,9 @@ const RegisterForm: FC<RegisterFormProps> = ({
       </div>
 
       {mutation.isError && (
-        <div className={s.errorMessage}>{mutation.error?.message}</div>
+        <div className={s.errorMessage}>
+          {(mutation.error as Error)?.message}
+        </div>
       )}
 
       <button
