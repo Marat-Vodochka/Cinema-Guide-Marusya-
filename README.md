@@ -47,35 +47,24 @@ A modern and elegant movie discovery web application built with React, TypeScrip
 ## 🏗️ Project Structure
 
 src/
-├── assets/ # Icons, images, and static files
-├── components/ # Reusable UI components
-│ ├── Authorization/ # Login/Register forms and user context
-│ ├── Header/ # Navigation header with search
-│ ├── MovieCard/ # Movie display component
-│ ├── SearchModal/ # Search functionality
-│ └── ui/ # Basic UI components (Button, Modal, etc.)
-├── pages/ # Page components
-│ ├── Account/ # User account and favorites
-│ ├── Genres/ # Genre listing page
-│ ├── Home/ # Homepage with hero section
-│ └── Movie/ # Movie details and genre pages
-├── services/ # API services and utilities
-├── types/ # TypeScript type definitions
-├── styles/ # Global styles and SCSS variables
-└── App.tsx # Main application component
-
-```
+├── assets/ # Icons & screenshots
+├── components/ # UI parts
+├── pages/ # App pages
+├── services/ # API calls
+└── App.tsx # Root component
 
 ## 🎯 Available Scripts
 
 # Development
-npm run dev          # Start development server
-npm run build        # Build for production
-npm run preview      # Preview production build
+
+npm run dev # Start development server
+npm run build # Build for production
+npm run preview # Preview production build
 
 # Code Quality
-npm run lint         # Run ESLint
-npm run type-check   # TypeScript type checking
+
+npm run lint # Run ESLint
+npm run type-check # TypeScript type checking
 
 ## 🎨 Key Features
 
@@ -120,31 +109,25 @@ npm run type-check   # TypeScript type checking
 ### Vercel (Recommended)
 
 # Deploy to Vercel
+
 npm install -g vercel
 vercel --prod
 
 ### Netlify
 
 # Build command: npm run build
-# Publish directory: dist
 
+# Publish directory: dist
 
 ### Manual Deployment
 
 npm run build
+
 # Upload dist/ folder to your hosting provider
 
 ## 📝 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- Movie data provided by [Skillbox Cinema API](https://cinemaguide.skillbox.cc)
-- Design inspiration from modern streaming platforms
-- Icons and assets from various open-source libraries
-
----
 
 ## 📧 Contact
 
@@ -158,4 +141,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ⭐ **If you like this project, please give it a star on GitHub!**
 
 **Project Link**: [https://github.com/Marat-Vodochka/vite-vk-marusya](https://github.com/Marat-Vodochka/vite-vk-marusya)
+
+```
+
 ```
