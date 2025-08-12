@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap");
 
 /* Reset */
 *,
@@ -9,14 +9,19 @@
   padding: 0;
 }
 
-/* Global*/
+/* Global */
 body {
-  font-family: 'Play', 'Arial', sans-serif;
+  font-family: "Play", "Arial", sans-serif;
   font-size: 16px;
   line-height: 1.5;
   color: #ffffff;
   overflow-x: hidden;
-  background: linear-gradient(178.73deg, rgba(39, 135, 245, 0.18) -17.53%, rgba(163, 147, 245, 0.18) 131.74%), linear-gradient(180deg, #000000 0%, rgba(39, 36, 36, 0.7) 100%);
+  background: linear-gradient(
+      178.73deg,
+      rgba(39, 135, 245, 0.18) -17.53%,
+      rgba(163, 147, 245, 0.18) 131.74%
+    ),
+    linear-gradient(180deg, #000000 0%, rgba(39, 36, 36, 0.7) 100%);
   background-blend-mode: normal;
   background-repeat: no-repeat;
   background-size: cover;
@@ -47,8 +52,10 @@ input:focus {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 80px;
+}
 
-  @media (max-width: 768px) {
+@media (max-width: 768px) {
+  .container {
     max-width: none;
     padding: 0 20px;
   }
