@@ -1,14 +1,15 @@
 import { useState } from "react";
-import LoginForm from "./LoginForm/LoginForm";
-import RegisterForm from "./RegisterForm/RegisterForm";
+import LoginForm, { type LoginData } from "./LoginForm/LoginForm";
+import RegisterForm, {
+  type RegisterDataForAuth,
+} from "./RegisterForm/RegisterForm";
 import s from "./AuthForm.module.scss";
-import type { LoginData } from "./LoginForm/LoginForm";
 
 type AuthFormProps = {
   isOpen: boolean;
   onClose: () => void;
   onLogin: (data: LoginData) => void;
-  onRegister: (email: string, password: string) => void;
+  onRegister: (data: RegisterDataForAuth) => void; // ⬅️ объект, не (email, password)
 };
 
 const AuthForm = ({ isOpen, onClose, onLogin, onRegister }: AuthFormProps) => {
@@ -29,7 +30,7 @@ const AuthForm = ({ isOpen, onClose, onLogin, onRegister }: AuthFormProps) => {
           />
         ) : (
           <RegisterForm
-            onRegister={onRegister}
+            onRegister={onRegister} // ⬅️ тип теперь совпадает
             onSwitchToLogin={() => setIsLogin(true)}
           />
         )}
