@@ -1,20 +1,25 @@
+// src/components/Authorization/AuthForm.tsx
 import { useState } from "react";
 import LoginForm, { type LoginData } from "./LoginForm/LoginForm";
-import RegisterForm, {
-  type RegisterDataForAuth,
-} from "./RegisterForm/RegisterForm";
+import RegisterForm from "./RegisterForm/RegisterForm"; // ⬅️ без типа
 import s from "./AuthForm.module.scss";
+
+// ⬇️ локальный тип вместо импорта
+type RegisterDataForAuth = {
+  email: string;
+  password: string;
+  name?: string;
+};
 
 type AuthFormProps = {
   isOpen: boolean;
   onClose: () => void;
   onLogin: (data: LoginData) => void;
-  onRegister: (data: RegisterDataForAuth) => void; // ⬅️ объект, не (email, password)
+  onRegister: (data: RegisterDataForAuth) => void;
 };
 
 const AuthForm = ({ isOpen, onClose, onLogin, onRegister }: AuthFormProps) => {
   const [isLogin, setIsLogin] = useState(true);
-
   if (!isOpen) return null;
 
   return (
@@ -30,7 +35,7 @@ const AuthForm = ({ isOpen, onClose, onLogin, onRegister }: AuthFormProps) => {
           />
         ) : (
           <RegisterForm
-            onRegister={onRegister} // ⬅️ тип теперь совпадает
+            onRegister={onRegister}
             onSwitchToLogin={() => setIsLogin(true)}
           />
         )}

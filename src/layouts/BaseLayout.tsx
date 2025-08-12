@@ -9,8 +9,14 @@ import RegistrationSuccess from "../components/Authorization/RegistrationSuccess
 import s from "./BaseLayout.module.scss";
 import { login, fetchMe } from "../services/User";
 import type { LoginData } from "../components/Authorization/LoginForm/LoginForm";
-import type { RegisterDataForAuth } from "../components/Authorization/RegisterForm/RegisterForm";
 import type { User } from "../services/User";
+
+// ⬇️ локальный тип
+type RegisterDataForAuth = {
+  email: string;
+  password: string;
+  name?: string;
+};
 
 const BaseLayout = () => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -37,13 +43,9 @@ const BaseLayout = () => {
     }
   };
 
-  // ⬇️ меняем сигнатуру: принимаем объект { email, password, name? }
   const handleRegister = async ({ email, password }: RegisterDataForAuth) => {
     try {
-      // После успешной регистрации (её делает RegisterForm) сразу логинимся
       await login({ email, password });
-
-      // Получаем профиль пользователя
       const profile = await fetchMe();
       setUser(profile);
       setAuthMode("success");
@@ -60,7 +62,6 @@ const BaseLayout = () => {
         <Outlet />
       </main>
       <Footer className={s["app-wrapper"]} />
-
       <Modal isOpen={isAuthModalOpen} onClose={closeAuthModal}>
         {authMode === "login" && (
           <LoginForm
