@@ -7,13 +7,16 @@ import LoginForm from "../components/Authorization/LoginForm/LoginForm";
 import RegisterForm from "../components/Authorization/RegisterForm/RegisterForm";
 import RegistrationSuccess from "../components/Authorization/RegistrationSuccess/RegistrationSuccess";
 import s from "./BaseLayout.module.scss";
-import { login, fetchMe } from '../services/User';
+import { login, fetchMe } from "../services/User";
 import type { LoginData } from "../components/Authorization/LoginForm/LoginForm";
-import type { User } from '../services/User'; 
+import type { RegisterDataForAuth } from "../components/Authorization/RegisterForm/RegisterForm";
+import type { User } from "../services/User";
 
 const BaseLayout = () => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const [authMode, setAuthMode] = useState<"login" | "register" | "success">("login");
+  const [authMode, setAuthMode] = useState<"login" | "register" | "success">(
+    "login"
+  );
   const [user, setUser] = useState<User | null>(null);
 
   const openAuthModal = (mode: "login" | "register" = "login") => {
@@ -34,11 +37,12 @@ const BaseLayout = () => {
     }
   };
 
-  const handleRegister = async (email: string, password: string) => {
+  // ⬇️ меняем сигнатуру: принимаем объект { email, password, name? }
+  const handleRegister = async ({ email, password }: RegisterDataForAuth) => {
     try {
-      // После успешной регистрации сразу логинимся
+      // После успешной регистрации (её делает RegisterForm) сразу логинимся
       await login({ email, password });
-      
+
       // Получаем профиль пользователя
       const profile = await fetchMe();
       setUser(profile);
@@ -71,9 +75,7 @@ const BaseLayout = () => {
           />
         )}
         {authMode === "success" && (
-          <RegistrationSuccess
-            onLoginClick={() => setAuthMode("login")}
-          />
+          <RegistrationSuccess onLoginClick={() => setAuthMode("login")} />
         )}
       </Modal>
     </div>
