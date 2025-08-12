@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { getRandomMovie, addToFavorites, removeFromFavorites, getFavorites } from "../../../services/movieService";
+import {
+  getRandomMovie,
+  addToFavorites,
+  removeFromFavorites,
+  getFavorites,
+} from "../../../services/movieService";
 import type { Movie } from "../../../types/movie";
 import s from "./Hero.module.scss";
 import { useNavigate } from "react-router-dom";
@@ -18,7 +23,9 @@ const Hero = () => {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isTrailerOpen, setIsTrailerOpen] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [pendingFavoriteAction, setPendingFavoriteAction] = useState<"add" | "remove" | null>(null);
+  const [pendingFavoriteAction, setPendingFavoriteAction] = useState<
+    "add" | "remove" | null
+  >(null);
   const { user } = useUser();
   const navigate = useNavigate();
 
@@ -32,8 +39,8 @@ const Hero = () => {
 
   useEffect(() => {
     if (user && movie) {
-      getFavorites().then(favs => {
-        setIsFavorite(favs.some(f => f.id === movie.id));
+      getFavorites().then((favs) => {
+        setIsFavorite(favs.some((f) => f.id === movie.id));
       });
     } else {
       setIsFavorite(false);
@@ -57,14 +64,14 @@ const Hero = () => {
       if (isFavorite) {
         await removeFromFavorites(movie.id);
         setIsFavorite(false);
-        toast.success("Фильм удалён из избранного");
+        toast.success("Movie removed from favorites");
       } else {
         await addToFavorites(movie.id);
         setIsFavorite(true);
-        toast.success("Фильм добавлен в избранное");
+        toast.success("Movie added to favorites");
       }
     } catch (error) {
-      toast.error("Ошибка при изменении избранного");
+      toast.error("Error updating favorites");
     }
   };
 
@@ -86,12 +93,12 @@ const Hero = () => {
     }
   };
 
-  if (!movie) return <div className={s.hero__loading}>Загрузка...</div>;
+  if (!movie) return <div className={s.hero__loading}>Loading...</div>;
 
   const releaseYear = movie.releaseDate?.slice(0, 4) || "—";
   const duration =
     movie.runtime && movie.runtime > 0
-      ? `${Math.floor(movie.runtime / 60)} ч ${movie.runtime % 60} мин`
+      ? `${Math.floor(movie.runtime / 60)}h ${movie.runtime % 60}m`
       : "";
 
   return (
@@ -115,25 +122,24 @@ const Hero = () => {
               className={`${s.hero__btn} ${s["hero__btn--primary"]}`}
               onClick={handleTrailerClick}
             >
-              Трейлер
+              Trailer
             </Button>
             <div className={s.buttonsRow}>
-              <Button
-                className= {s.hero__btn} 
-                onClick={handleAboutClick}
-              >
-                О фильме
+              <Button className={s.hero__btn} onClick={handleAboutClick}>
+                About Movie
               </Button>
               <Button
                 className={s.hero__iconbtn}
-                aria-label={isFavorite ? "Удалить из избранного" : "Добавить в избранное"}
+                aria-label={
+                  isFavorite ? "Remove from favorites" : "Add to favorites"
+                }
                 onClick={handleFavoriteClick}
               >
                 <IconHeart style={{ color: isFavorite ? "#B4A9FF" : "#fff" }} />
               </Button>
               <Button
                 className={s.hero__iconbtn}
-                aria-label="Обновить фильм"
+                aria-label="Refresh movie"
                 onClick={fetchMovie}
               >
                 <IconRefresh />

@@ -10,12 +10,12 @@
 }
 
 .container {
-   max-width: 100%;
+  max-width: 100%;
   padding: 0 80px; /* 1280 - 160 = 1120px (1105px занято) */
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px; 
+  gap: 10px;
 
   @media (max-width: 767px) {
     max-width: none;
@@ -42,13 +42,13 @@
   padding: 0;
 
   &:hover::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: -2px;
     left: 0;
     width: 100%;
     height: 1.5px;
-    background-color: #DC5DFC;
+    background-color: #dc5dfc;
   }
 
   &.active {
@@ -56,7 +56,7 @@
     font-weight: 600;
 
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       bottom: -4px;
       left: 0;
@@ -109,11 +109,11 @@
   font-size: 20px;
   border-radius: 12px;
   border: none;
-  background-color: #393B3C;
+  background-color: #393b3c;
   color: #fff;
   outline: none;
   margin-bottom: 0;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   transition: border 0.2s;
   font-family: inherit;
 
@@ -184,9 +184,9 @@
   top: 87px;
   left: 45%;
   right: 15%;
-  background-color: #393B3C;
+  background-color: #393b3c;
   border-radius: 16px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
   z-index: 100;
   padding: 8px 0;
   margin: 0;
@@ -213,19 +213,18 @@
     background: #181f2a;
   }
 
-
   &:hover {
     background: #222a3f;
   }
 }
 
-.itemRow{
+.itemRow {
   display: flex;
   flex-direction: row;
   gap: 12px;
 }
 
-.itemInfo{
+.itemInfo {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -235,7 +234,7 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  background: #308E21;
+  background: #308e21;
   border-radius: 16px;
   width: 47px;
   height: 20px;
@@ -255,4 +254,3 @@
   font-weight: 700;
   line-height: 1;
 }
-

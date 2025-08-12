@@ -4,16 +4,13 @@
   align-items: center;
   cursor: pointer;
 
-  @media (max-width:767px) {
+  @media (max-width: 767px) {
     gap: 6.5px;
     align-items: center;
   }
 }
 
 .logo__icon {
-  width: 24px;
-}
-
-.logo__iconText {
-  height: 18px;
+  height: 200px;
+  width: 200px;
 }

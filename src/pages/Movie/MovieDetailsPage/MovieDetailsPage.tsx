@@ -6,7 +6,11 @@ import type { Movie } from "../../../types/movie";
 import Button from "../../../components/ui/Button/Button";
 import IconFavorite from "../../../assets/icons/icon-fav.svg?react";
 import IconFavoriteActive from "../../../assets/icons/icon-favorite-active.svg?react";
-import { addToFavorites, getFavorites, removeFromFavorites } from "../../../services/movieService";
+import {
+  addToFavorites,
+  getFavorites,
+  removeFromFavorites,
+} from "../../../services/movieService";
 import TrailerModal from "../../../components/ui/TrailerModal/TrailerModal";
 
 const MovieDetailsPage = () => {
@@ -21,8 +25,8 @@ const MovieDetailsPage = () => {
       getMovieById(movieId)
         .then(setMovie)
         .finally(() => setLoading(false));
-      getFavorites().then(favs => {
-        setIsFavorite(favs.some(m => String(m.id) === String(movieId)));
+      getFavorites().then((favs) => {
+        setIsFavorite(favs.some((m) => String(m.id) === String(movieId)));
       });
     }
   }, [movieId]);
@@ -42,21 +46,23 @@ const MovieDetailsPage = () => {
     }
   };
 
-  if (loading) return (
-    <div className={s.container}>
-      <div className={s.wrapper}>
-        <div className={s.status}>Загрузка...</div>
+  if (loading)
+    return (
+      <div className={s.container}>
+        <div className={s.wrapper}>
+          <div className={s.status}>Loading...</div>
+        </div>
       </div>
-    </div>
-  );
-  
-  if (!movie) return (
-    <div className={s.container}>
-      <div className={s.wrapper}>
-        <div className={s.status}>Фильм не найден</div>
+    );
+
+  if (!movie)
+    return (
+      <div className={s.container}>
+        <div className={s.wrapper}>
+          <div className={s.status}>Movie not found</div>
+        </div>
       </div>
-    </div>
-  );
+    );
 
   return (
     <div className={s.container}>
@@ -70,14 +76,14 @@ const MovieDetailsPage = () => {
               <span className={s.year}>{movie.releaseDate?.slice(0, 4)}</span>
               <span className={s.genres}>{movie.genres?.join(", ")}</span>
               <span className={s.runtime}>
-                {Math.floor(movie.runtime / 60)} ч {movie.runtime % 60} мин
+                {Math.floor(movie.runtime / 60)}h {movie.runtime % 60}m
               </span>
             </div>
             <h1 className={s.title}>{movie.title}</h1>
             <p className={s.plot}>{movie.plot}</p>
             <div className={s.actions}>
               <Button className={s.trailerBtn} onClick={handleTrailerClick}>
-                Трейлер
+                Trailer
               </Button>
               <button className={s.favoriteBtn} onClick={toggleFavorite}>
                 {isFavorite ? (
@@ -88,40 +94,36 @@ const MovieDetailsPage = () => {
               </button>
             </div>
           </div>
-          <img
-            src={movie.posterUrl}
-            alt={movie.title}
-            className={s.poster}
-          />
+          <img src={movie.posterUrl} alt={movie.title} className={s.poster} />
         </div>
 
         <div className={s.detailsSection}>
-          <h2 className={s.sectionTitle}>О фильме</h2>
+          <h2 className={s.sectionTitle}>About Movie</h2>
           <div className={s.detailsGrid}>
             <div className={s.detailRow}>
-              <span className={s.label}>Язык оригинала</span>
+              <span className={s.label}>Original Language</span>
               <span className={s.value}>
                 {movie.language || movie.languages?.join(", ")}
               </span>
             </div>
             <div className={s.detailRow}>
-              <span className={s.label}>Бюджет</span>
+              <span className={s.label}>Budget</span>
               <span className={s.value}>{movie.budget}</span>
             </div>
             <div className={s.detailRow}>
-              <span className={s.label}>Выручка</span>
+              <span className={s.label}>Revenue</span>
               <span className={s.value}>{movie.revenue}</span>
             </div>
             <div className={s.detailRow}>
-              <span className={s.label}>Режиссёр</span>
+              <span className={s.label}>Director</span>
               <span className={s.value}>{movie.director}</span>
             </div>
             <div className={s.detailRow}>
-              <span className={s.label}>Продакшен</span>
+              <span className={s.label}>Production</span>
               <span className={s.value}>{movie.production}</span>
             </div>
             <div className={s.detailRow}>
-              <span className={s.label}>Награды</span>
+              <span className={s.label}>Awards</span>
               <span className={s.value}>{movie.awardsSummary}</span>
             </div>
           </div>
@@ -131,7 +133,10 @@ const MovieDetailsPage = () => {
           <TrailerModal
             isOpen={isTrailerOpen}
             onClose={() => setIsTrailerOpen(false)}
-            trailerUrl={movie.trailerUrl || `https://www.youtube.com/embed/${movie.trailerYoutubeId}`}
+            trailerUrl={
+              movie.trailerUrl ||
+              `https://www.youtube.com/embed/${movie.trailerYoutubeId}`
+            }
             movieTitle={movie.title}
           />
         )}

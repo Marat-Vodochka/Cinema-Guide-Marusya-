@@ -1,69 +1,161 @@
-# React + TypeScript + Vite
+# Cinema Guide (Marusya)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern and elegant movie discovery web application built with React, TypeScript, and Vite. Discover new movies, explore different genres, and manage your personal favorites collection with a sleek dark interface.
 
-Currently, two official plugins are available:
+![Account Page](./src/assets/screenshots/image-account.png)
+![Genres Page](./src/assets/screenshots/image-genres.png)
+![Hero Section](./src/assets/screenshots/image-hero.png)
+![Top Movies](./src/assets/screenshots/image-topmovies.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## Expanding the ESLint configuration
+- 🎬 **Random Movie Showcase** - Discover new movies with featured hero section
+- 🔍 **Smart Search** - Real-time movie search with autocomplete suggestions
+- 🎭 **Genre Filtering** - Browse movies by categories and genres
+- ❤️ **Favorites System** - Save and manage your favorite movies
+- 👤 **User Authentication** - Secure login and registration
+- 🎥 **Movie Trailers** - Watch trailers directly in the app
+- 📊 **Detailed Movie Info** - Comprehensive information, ratings, and cast details
+- 📱 **Responsive Design** - Optimized for desktop, tablet, and mobile
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠️ Tech Stack
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **Frontend**: React 18 + TypeScript
+- **Build Tool**: Vite
+- **Styling**: SCSS Modules
+- **Routing**: React Router v6
+- **State Management**: React Context API
+- **HTTP Client**: Axios
+- **Notifications**: React Toastify
+- **Icons**: SVG React Components
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## 📦 Installation
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1. **Clone the repository**
+   git clone https://github.com/Marat-Vodochka/vite-vk-marusya.git
+   cd vite-vk-marusya
+
+2. **Install dependencies**
+   npm install
+
+3. **Start development server**
+   npm run dev
+
+4. **Open in browser**
+   Navigate to [http://localhost:5173](http://localhost:5173)
+
+## 🏗️ Project Structure
+
+src/
+├── assets/ # Icons, images, and static files
+├── components/ # Reusable UI components
+│ ├── Authorization/ # Login/Register forms and user context
+│ ├── Header/ # Navigation header with search
+│ ├── MovieCard/ # Movie display component
+│ ├── SearchModal/ # Search functionality
+│ └── ui/ # Basic UI components (Button, Modal, etc.)
+├── pages/ # Page components
+│ ├── Account/ # User account and favorites
+│ ├── Genres/ # Genre listing page
+│ ├── Home/ # Homepage with hero section
+│ └── Movie/ # Movie details and genre pages
+├── services/ # API services and utilities
+├── types/ # TypeScript type definitions
+├── styles/ # Global styles and SCSS variables
+└── App.tsx # Main application component
+
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🎯 Available Scripts
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+# Development
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run preview      # Preview production build
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Code Quality
+npm run lint         # Run ESLint
+npm run type-check   # TypeScript type checking
+
+## 🎨 Key Features
+
+### Hero Section
+
+- Random movie showcase with backdrop image
+- Movie details (rating, year, genres, duration)
+- Quick actions: trailer, favorites, movie details
+- Refresh button for new random movie
+
+### Search System
+
+- Real-time search with live suggestions
+- Movie cards with posters and ratings
+- Direct navigation to movie details
+- Mobile-optimized search modal
+
+### User Authentication
+
+- Login and registration forms
+- Protected routes for favorites
+- Persistent user sessions
+- User profile management
+
+### Movie Management
+
+- Add/remove from favorites
+- Movie details with full information
+- Genre-based browsing
+- Responsive movie grids
+
+## 🌟 Design Highlights
+
+- **Dark Theme**: Modern dark UI with purple accent colors
+- **Responsive Grid**: Adaptive layouts for all screen sizes
+- **Smooth Animations**: Hover effects and page transitions
+- **Loading States**: Skeleton loaders and progress indicators
+- **Error Handling**: User-friendly error messages and fallbacks
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+
+# Deploy to Vercel
+npm install -g vercel
+vercel --prod
+
+### Netlify
+
+# Build command: npm run build
+# Publish directory: dist
+
+
+### Manual Deployment
+
+npm run build
+# Upload dist/ folder to your hosting provider
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Movie data provided by [Skillbox Cinema API](https://cinemaguide.skillbox.cc)
+- Design inspiration from modern streaming platforms
+- Icons and assets from various open-source libraries
+
+---
+
+## 📧 Contact
+
+**Marat Ryspekov**
+
+- **GitHub**: [@Marat-Vodochka](https://github.com/Marat-Vodochka)
+- **LinkedIn**: [Marat Ryspekov](https://linkedin.com/in/marat-ryspekov)
+
+---
+
+⭐ **If you like this project, please give it a star on GitHub!**
+
+**Project Link**: [https://github.com/Marat-Vodochka/vite-vk-marusya](https://github.com/Marat-Vodochka/vite-vk-marusya)
 ```

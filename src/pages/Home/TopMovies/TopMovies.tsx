@@ -12,19 +12,19 @@ const TopMovies = () => {
   useEffect(() => {
     getTopMovies()
       .then(setList)
-      .catch(() => setError("Не удалось загрузить фильмы"))
+      .catch(() => setError("Failed to load movies"))
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <div className={s.status}>Загрузка...</div>;
+  if (loading) return <div className={s.status}>Loading...</div>;
   if (error) return <div className={s.status}>{error}</div>;
 
   return (
     <section className={s.top}>
-      <h2 className={s.top__title}>Топ 10 фильмов</h2>
+      <h2 className={s.top__title}>Top 10 movies</h2>
       <div className={s.top__grid}>
         {list.slice(0, 10).map((m, i) => (
-          <MovieCard key={m.id} movie={m} rank={i + 1} showRank={true}/>
+          <MovieCard key={m.id} movie={m} rank={i + 1} showRank={true} />
         ))}
       </div>
     </section>

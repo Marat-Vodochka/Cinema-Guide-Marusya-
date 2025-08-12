@@ -1,10 +1,10 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import type { FC } from "react";
 import s from "../RegisterForm/RegisterForm.module.scss";
-import LogoBlack from '../../../assets/icons/icon-logo-black.svg';
-import EmailIcon from '../../../assets/icons/icon-email.svg?react';
-import UserIcon from '../../../assets/icons/icon-user.svg?react';
-import PasswordIcon from '../../../assets/icons/icon-password.svg?react';
+import LogoBlack from "../../../assets/icons/icon-marusya-dark.svg";
+import EmailIcon from "../../../assets/icons/icon-email.svg?react";
+import UserIcon from "../../../assets/icons/icon-user.svg?react";
+import PasswordIcon from "../../../assets/icons/icon-password.svg?react";
 import FormField from "../../ui/FormField/FormField";
 import { useMutation } from "@tanstack/react-query";
 import { registerUser } from "../../../services/User";
@@ -18,11 +18,14 @@ type RegisterData = {
 };
 
 type RegisterFormProps = {
-  onRegister: (email: string, password: string) => void; // Добавляем параметры для автологина
+  onRegister: (email: string, password: string) => void;
   onSwitchToLogin: () => void;
 };
 
-const RegisterForm: FC<RegisterFormProps> = ({ onRegister, onSwitchToLogin }) => {
+const RegisterForm: FC<RegisterFormProps> = ({
+  onRegister,
+  onSwitchToLogin,
+}) => {
   const [formData, setFormData] = useState<RegisterData>({
     email: "",
     name: "",
@@ -39,15 +42,16 @@ const RegisterForm: FC<RegisterFormProps> = ({ onRegister, onSwitchToLogin }) =>
     confirmPassword: false,
   });
 
- const mutation = useMutation<void, Error, RegisterData>({
-  mutationFn: registerUser,
-  onSuccess: () => {
-    onRegister(formData.email, formData.password); // Передаем email и password для автологина
-  },
-  onError: (error: Error) => {
-    alert(error.message || "Ошибка регистрации");
-  },
-});
+  const mutation = useMutation<void, Error, RegisterData>({
+    mutationFn: registerUser,
+    onSuccess: () => {
+      onRegister(formData.email, formData.password); // Autologin after registration
+    },
+    onError: (error: Error) => {
+      alert(error.message || "Registration error");
+    },
+  });
+
   const validate = () => {
     const newErrors = {
       email: formData.email.trim() === "",
@@ -77,11 +81,11 @@ const RegisterForm: FC<RegisterFormProps> = ({ onRegister, onSwitchToLogin }) =>
       <div className={s.logo_wrapper}>
         <img src={LogoBlack} alt="Marusya logo black" />
       </div>
-    <h2 className={s.formTitle}>Регистрация</h2>
+      <h2 className={s.formTitle}>Register</h2>
       <div className={s.inputContainer}>
         <FormField
           type="email"
-          placeholder="Электронная почта"
+          placeholder="Email"
           value={formData.email}
           onChange={(e) => handleChange("email", e.target.value)}
           error={errors.email}
@@ -89,7 +93,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ onRegister, onSwitchToLogin }) =>
         />
         <FormField
           type="text"
-          placeholder="Имя"
+          placeholder="First Name"
           value={formData.name}
           onChange={(e) => handleChange("name", e.target.value)}
           error={errors.name}
@@ -97,7 +101,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ onRegister, onSwitchToLogin }) =>
         />
         <FormField
           type="text"
-          placeholder="Фамилия"
+          placeholder="Last Name"
           value={formData.surname}
           onChange={(e) => handleChange("surname", e.target.value)}
           error={errors.surname}
@@ -105,7 +109,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ onRegister, onSwitchToLogin }) =>
         />
         <FormField
           type="password"
-          placeholder="Пароль"
+          placeholder="Password"
           value={formData.password}
           onChange={(e) => handleChange("password", e.target.value)}
           error={errors.password}
@@ -113,7 +117,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ onRegister, onSwitchToLogin }) =>
         />
         <FormField
           type="password"
-          placeholder="Подтвердите пароль"
+          placeholder="Confirm Password"
           value={formData.confirmPassword}
           onChange={(e) => handleChange("confirmPassword", e.target.value)}
           error={errors.confirmPassword}
@@ -128,13 +132,13 @@ const RegisterForm: FC<RegisterFormProps> = ({ onRegister, onSwitchToLogin }) =>
       <button
         type="submit"
         className={s.button}
-        disabled={mutation.status === 'pending'}
-        >
-        {mutation.status === 'pending' ? "Регистрация..." : "Создать аккаунт"}
-        </button>
+        disabled={mutation.status === "pending"}
+      >
+        {mutation.status === "pending" ? "Creating..." : "Create Account"}
+      </button>
 
       <p onClick={onSwitchToLogin} className={s.registerText}>
-        У меня есть пароль
+        I have an account
       </p>
     </form>
   );

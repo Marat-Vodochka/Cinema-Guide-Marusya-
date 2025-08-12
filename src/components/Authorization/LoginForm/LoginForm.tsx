@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import type { FC } from "react";
 import s from "../LoginForm/LoginForm.module.scss";
-import LogoBlack from '../../../assets/icons/icon-logo-black.svg';
-import EmailIcon from '../../../assets/icons/icon-email.svg?react';
-import PasswordIcon from '../../../assets/icons/icon-password.svg?react';
+import LogoBlack from "../../../assets/icons/icon-marusya-dark.svg";
+import EmailIcon from "../../../assets/icons/icon-email.svg?react";
+import PasswordIcon from "../../../assets/icons/icon-password.svg?react";
 import FormField from "../../ui/FormField/FormField";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../../../services/User";
@@ -34,9 +34,8 @@ const LoginForm: FC<LoginFormProps> = ({ onSwitchToRegister, onLogin }) => {
       onLogin({ email, password });
     },
     onError: (error) => {
-      console.error("Ошибка входа:", error.message);
-      // Можно добавить UI уведомление об ошибке
-    }
+      console.error("Login error:", error.message);
+    },
   });
 
   const submitHandler = (e: React.FormEvent) => {
@@ -60,7 +59,7 @@ const LoginForm: FC<LoginFormProps> = ({ onSwitchToRegister, onLogin }) => {
       <div className={s.inputContainer}>
         <FormField
           type="email"
-          placeholder="Электронная почта"
+          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           error={errors.email}
@@ -68,7 +67,7 @@ const LoginForm: FC<LoginFormProps> = ({ onSwitchToRegister, onLogin }) => {
         />
         <FormField
           type="password"
-          placeholder="Пароль"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           error={errors.password}
@@ -77,9 +76,7 @@ const LoginForm: FC<LoginFormProps> = ({ onSwitchToRegister, onLogin }) => {
       </div>
 
       {loginMutation.isError && (
-        <div className={s.errorMessage}>
-          {loginMutation.error?.message}
-        </div>
+        <div className={s.errorMessage}>{loginMutation.error?.message}</div>
       )}
 
       <button
@@ -87,11 +84,11 @@ const LoginForm: FC<LoginFormProps> = ({ onSwitchToRegister, onLogin }) => {
         className={s.button}
         disabled={loginMutation.status === "pending"}
       >
-        {loginMutation.status === "pending" ? "Вход..." : "Войти"}
+        {loginMutation.status === "pending" ? "Signing in..." : "Sign In"}
       </button>
 
       <p onClick={onSwitchToRegister} className={s.registerText}>
-        Регистрация
+        Register
       </p>
     </form>
   );

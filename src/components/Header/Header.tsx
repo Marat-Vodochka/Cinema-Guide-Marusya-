@@ -42,7 +42,7 @@ const Header = ({ onLoginClick }: HeaderProps) => {
     if (query.length > 1) {
       setLoading(true);
       getMovieByTitle(query)
-        .then(movies => {
+        .then((movies) => {
           setResults(movies.slice(0, 5));
           setLoading(false);
         })
@@ -82,81 +82,104 @@ const Header = ({ onLoginClick }: HeaderProps) => {
             <>
               <div className={s.navBlock}>
                 <nav className={s.nav}>
-                  <NavLink to="/" className={s.link}>Главная</NavLink>
-                  <NavLink to="/genres" className={s.link}>Жанры</NavLink>
+                  <NavLink to="/" className={s.link}>
+                    Home
+                  </NavLink>
+                  <NavLink to="/genres" className={s.link}>
+                    Genres
+                  </NavLink>
                   <div className={s.searchWrapper}>
-                  <input
-                    ref={inputRef}
-                    className={s.searchInput}
-                    type="text"
-                    placeholder="Поиск"
-                    value={query}
-                    onChange={e => setQuery(e.target.value)}
-                  />
-                  {loading && <div className={s.loading}>Загрузка...</div>}
-                  {results.length > 0 && (
-                    <ul className={s.dropdown} ref={dropdownRef}>
-                      {results.map(movie => (
-                        <li 
-                          key={movie.id} 
-                          className={s.dropdownItem}
-                          onClick={() => {
-                            handleSearchSelect(movie);
-                            setResults([]); // скрыть dropdown после выбора
-                          }}
-                        >
-                          <div className={s.itemPoster}>
-                            <img src={movie.posterUrl} alt={movie.title} />
-                          </div>
-                          <div className={s.itemInfo}>
-                            <div className={s.itemRow}>
-                              <div className={s.ratingWrap}>
-                                <span className={s.ratingStar}>★</span>
-                                <span className={s.ratingValue}>
-                                  {movie.tmdbRating ? Number(movie.tmdbRating).toFixed(1) : ""}
+                    <input
+                      ref={inputRef}
+                      className={s.searchInput}
+                      type="text"
+                      placeholder="Search"
+                      value={query}
+                      onChange={(e) => setQuery(e.target.value)}
+                    />
+                    {loading && <div className={s.loading}>Loading...</div>}
+                    {results.length > 0 && (
+                      <ul className={s.dropdown} ref={dropdownRef}>
+                        {results.map((movie) => (
+                          <li
+                            key={movie.id}
+                            className={s.dropdownItem}
+                            onClick={() => {
+                              handleSearchSelect(movie);
+                              setResults([]);
+                            }}
+                          >
+                            <div className={s.itemPoster}>
+                              <img src={movie.posterUrl} alt={movie.title} />
+                            </div>
+                            <div className={s.itemInfo}>
+                              <div className={s.itemRow}>
+                                <div className={s.ratingWrap}>
+                                  <span className={s.ratingStar}>★</span>
+                                  <span className={s.ratingValue}>
+                                    {movie.tmdbRating
+                                      ? Number(movie.tmdbRating).toFixed(1)
+                                      : ""}
+                                  </span>
+                                </div>
+                                <span className={s.year}>
+                                  {movie.releaseDate?.slice(0, 4)}
+                                </span>
+                                <span className={s.genre}>
+                                  {movie.genres?.join(", ")}
+                                </span>
+                                <span className={s.runtime}>
+                                  {movie.runtime ? `${movie.runtime} min` : ""}
                                 </span>
                               </div>
-                              <span className={s.year}>{movie.releaseDate?.slice(0, 4)}</span>
-                              <span className={s.genre}>{movie.genres?.join(", ")}</span>
-                              <span className={s.runtime}>{movie.runtime ? `${movie.runtime} мин` : ""}</span>
+                              <div className={s.title}>{movie.title}</div>
                             </div>
-                            <div className={s.title}>{movie.title}</div>
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
                 </nav>
-                
               </div>
               {user ? (
-                <Link to="/account" className={s.userName}>{user.surname}</Link>
+                <Link to="/account" className={s.userName}>
+                  {user.surname}
+                </Link>
               ) : (
-                <Button className={s.loginButton} onClick={onLoginClick}>Войти</Button>
+                <Button className={s.loginButton} onClick={onLoginClick}>
+                  Sign In
+                </Button>
               )}
             </>
           )}
 
           {isMobile && (
             <div className={s.mobileIcons}>
-              <NavLink to="/genres" aria-label="Жанры" className={s.iconButton}>
+              <NavLink
+                to="/genres"
+                aria-label="Genres"
+                className={s.iconButton}
+              >
                 <IconGenres />
               </NavLink>
-              <button 
-                aria-label="Поиск" 
+              <button
+                aria-label="Search"
                 className={s.iconButton}
                 onClick={() => setIsSearchModalOpen(true)}
               >
                 <IconSearch />
               </button>
               {user ? (
-                <NavLink to="/account" aria-label="Профиль" className={s.iconButton}>
+                <NavLink
+                  to="/account"
+                  aria-label="Profile"
+                  className={s.iconButton}
+                >
                   <IconProfile />
                 </NavLink>
               ) : (
-                <button 
-                  aria-label="Профиль" 
+                <button
+                  aria-label="Profile"
                   className={s.iconButton}
                   onClick={onLoginClick}
                 >
