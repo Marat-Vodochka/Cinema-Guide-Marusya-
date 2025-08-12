@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import type { FC } from "react";
-import s from "../RegisterForm/RegisterForm.module.scss";
+import s from "./RegisterForm.module.scss"; // ✅ ИСПРАВЛЕНО
 import LogoBlack from "../../../assets/icons/icon-marusya-dark.svg";
 import EmailIcon from "../../../assets/icons/icon-email.svg?react";
 import UserIcon from "../../../assets/icons/icon-user.svg?react";
