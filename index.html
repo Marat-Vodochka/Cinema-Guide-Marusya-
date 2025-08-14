@@ -3,12 +3,49 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cinema Guide</title>
+
+    <!-- ✅ ДОБАВЬТЕ СТИЛИ СЮДА -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap"
       rel="stylesheet"
     />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
+
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Play", "Arial", sans-serif !important;
+        font-size: 16px;
+        line-height: 1.5;
+        color: #ffffff !important;
+        overflow-x: hidden;
+        background: linear-gradient(
+            178.73deg,
+            rgba(39, 135, 245, 0.18) -17.53%,
+            rgba(163, 147, 245, 0.18) 131.74%
+          ),
+          linear-gradient(180deg, #000000 0%, rgba(39, 36, 36, 0.7) 100%) !important;
+        background-blend-mode: normal;
+        background-repeat: no-repeat;
+        background-size: cover;
+        min-height: 100vh;
+        width: 100%;
+      }
+
+      #root {
+        min-height: 100vh;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
