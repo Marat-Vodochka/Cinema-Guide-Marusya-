@@ -7,7 +7,6 @@ import GenresPage from "./pages/Genres/GenresPage";
 import MoviesPage from "./pages/Movie/MoviePage/MoviePage";
 import MovieDetailsPage from "./pages/Movie/MovieDetailsPage/MovieDetailsPage";
 import AccountPage from "./pages/Account/AccountPage";
-import "./App.css";
 
 const App = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
