@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { Routes, Route } from 'react-router-dom';
-import BaseLayout from './layouts/BaseLayout';
-import HomePage from './pages/Home/HomePage';
-import LoginForm from './components/Authorization/LoginForm/LoginForm';
-import GenresPage from './pages/Genres/GenresPage';
-import MoviesPage from './pages/Movie/MoviePage/MoviePage';
-import MovieDetailsPage from './pages/Movie/MovieDetailsPage/MovieDetailsPage';
-import AccountPage from './pages/Account/AccountPage';
+import { Routes, Route } from "react-router-dom";
+import BaseLayout from "./layouts/BaseLayout";
+import HomePage from "./pages/Home/HomePage";
+import LoginForm from "./components/Authorization/LoginForm/LoginForm";
+import GenresPage from "./pages/Genres/GenresPage";
+import MoviesPage from "./pages/Movie/MoviePage/MoviePage";
+import MovieDetailsPage from "./pages/Movie/MovieDetailsPage/MovieDetailsPage";
+import AccountPage from "./pages/Account/AccountPage";
+import "./App.css";
 
 const App = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -30,16 +31,16 @@ const App = () => {
       </Routes>
 
       {isLoginOpen && (
-  <LoginForm 
-    onLogin={({ email, password }) => {
-      console.log("Logging in with", email, password);
-      handleLoginClose();
-    }}
-    onSwitchToRegister={() => {
-      handleLoginClose();
-    }}
-  />
-)}
+        <LoginForm
+          onLogin={({ email, password }) => {
+            console.log("Logging in with", email, password);
+            handleLoginClose();
+          }}
+          onSwitchToRegister={() => {
+            handleLoginClose();
+          }}
+        />
+      )}
     </>
   );
 };
