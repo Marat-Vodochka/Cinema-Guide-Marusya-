@@ -6,7 +6,7 @@ import Button from "../../components/ui/Button/Button";
 import { getMovieByTitle } from "../../services/movieService";
 import type { Movie } from "../../types/movie";
 import SearchModal from "../SearchModal/SearchModal";
-import { useUser } from "../Authorization/UserContext";
+import { useAppSelector } from "../../app/hooks";
 
 import IconGenres from "../../assets/icons/mobile-icon-genres.svg?react";
 import IconSearch from "../../assets/icons/icon-search.svg?react";
@@ -18,7 +18,7 @@ type User = {
 
 type HeaderProps = {
   onLoginClick: () => void;
-  user?: User | null;
+  user?: User | null; // оставил как было, не используем
 };
 
 const Header = ({ onLoginClick }: HeaderProps) => {
@@ -30,7 +30,8 @@ const Header = ({ onLoginClick }: HeaderProps) => {
   const navigate = useNavigate();
   const dropdownRef = useRef<HTMLUListElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const { user } = useUser();
+
+  const user = useAppSelector((s) => s.auth.user);
 
   useEffect(() => {
     const onResize = () => setIsMobile(window.innerWidth < 768);

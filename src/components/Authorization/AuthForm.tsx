@@ -1,15 +1,8 @@
-// src/components/Authorization/AuthForm.tsx
 import { useState } from "react";
 import LoginForm, { type LoginData } from "./LoginForm/LoginForm";
-import RegisterForm from "./RegisterForm/RegisterForm"; // ⬅️ без типа
 import s from "./AuthForm.module.scss";
-
-// ⬇️ локальный тип вместо импорта
-type RegisterDataForAuth = {
-  email: string;
-  password: string;
-  name?: string;
-};
+import { type RegisterDataForAuth } from "../../features/auth/types";
+import RegisterForm from "./RegisterForm/RegisterForm";
 
 type AuthFormProps = {
   isOpen: boolean;

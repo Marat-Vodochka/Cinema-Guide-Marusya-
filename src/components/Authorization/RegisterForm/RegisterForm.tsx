@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import type { FC } from "react";
-import s from "./RegisterForm.module.scss"; // ✅ ИСПРАВЛЕНО
+import s from "./RegisterForm.module.scss";
 import LogoBlack from "../../../assets/icons/icon-marusya-dark.svg";
 import EmailIcon from "../../../assets/icons/icon-email.svg?react";
 import UserIcon from "../../../assets/icons/icon-user.svg?react";
 import PasswordIcon from "../../../assets/icons/icon-password.svg?react";
 import FormField from "../../ui/FormField/FormField";
-import { useMutation } from "@tanstack/react-query";
-import { registerUser } from "../../../services/User";
+
+import { useRegisterMutation } from "../../../features/auth/authApi";
+import type { RegisterDataForAuth } from "../../../features/auth/types";
 
 type RegisterData = {
   email: string;
@@ -15,12 +16,6 @@ type RegisterData = {
   surname: string;
   password: string;
   confirmPassword: string;
-};
-
-export type RegisterDataForAuth = {
-  email: string;
-  password: string;
-  name?: string;
 };
 
 type RegisterFormProps = {
@@ -48,20 +43,7 @@ const RegisterForm: FC<RegisterFormProps> = ({
     confirmPassword: false,
   });
 
-  const mutation = useMutation<void, Error, RegisterData>({
-    mutationFn: registerUser,
-    onSuccess: () => {
-      // Автовход после регистрации — передаём объект
-      onRegister({
-        email: formData.email,
-        password: formData.password,
-        name: formData.name,
-      });
-    },
-    onError: (error: Error) => {
-      alert(error.message || "Registration error");
-    },
-  });
+  const [register, { isLoading, error }] = useRegisterMutation();
 
   const validate = () => {
     const newErrors = {
@@ -81,12 +63,30 @@ const RegisterForm: FC<RegisterFormProps> = ({
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const submitHandler = (e: React.FormEvent) => {
+  const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
-    // Отправляем на API всю форму — как и раньше
-    mutation.mutate(formData);
+
+    try {
+      await register(formData).unwrap();
+      onRegister({
+        email: formData.email,
+        password: formData.password,
+        name: formData.name,
+      });
+    } catch (err) {
+      // ошибка уже в "error"
+      console.error(err);
+    }
   };
+
+  const errorMessage =
+    (error &&
+      "status" in error &&
+      typeof error.status === "number" &&
+      (error as any).data?.message) ||
+    (error && "error" in error && (error as any).error) ||
+    "";
 
   return (
     <form className={s.form} onSubmit={submitHandler}>
@@ -137,18 +137,10 @@ const RegisterForm: FC<RegisterFormProps> = ({
         />
       </div>
 
-      {mutation.isError && (
-        <div className={s.errorMessage}>
-          {(mutation.error as Error)?.message}
-        </div>
-      )}
+      {errorMessage && <div className={s.errorMessage}>{errorMessage}</div>}
 
-      <button
-        type="submit"
-        className={s.button}
-        disabled={mutation.status === "pending"}
-      >
-        {mutation.status === "pending" ? "Creating..." : "Create Account"}
+      <button type="submit" className={s.button} disabled={isLoading}>
+        {isLoading ? "Creating..." : "Create Account"}
       </button>
 
       <p onClick={onSwitchToLogin} className={s.registerText}>

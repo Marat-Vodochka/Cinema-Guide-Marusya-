@@ -5,50 +5,56 @@ import LogoBlack from "../../../assets/icons/icon-marusya-dark.svg";
 import EmailIcon from "../../../assets/icons/icon-email.svg?react";
 import PasswordIcon from "../../../assets/icons/icon-password.svg?react";
 import FormField from "../../ui/FormField/FormField";
-import { useMutation } from "@tanstack/react-query";
-import { login, fetchMe } from "../../../services/User";
-import { useUser } from "../../Authorization/UserContext";
 
-export type LoginData = {
-  email: string;
-  password: string;
-};
+import {
+  useLoginMutation,
+  useLazyFetchMeQuery,
+} from "../../../features/auth/authApi";
+import { useAppDispatch } from "../../../app/hooks";
+import { setUser } from "../../../features/auth/authSlice";
+
+export type LoginData = { email: string; password: string };
 
 type LoginFormProps = {
   onSwitchToRegister: () => void;
-  onLogin: (data: LoginData) => void;
+  onLogin: (data?: LoginData) => void;
 };
 
 const LoginForm: FC<LoginFormProps> = ({ onSwitchToRegister, onLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({ email: false, password: false });
-  const { setUser } = useUser();
 
-  const loginMutation = useMutation<void, Error, LoginData>({
-    mutationFn: login,
-    onSuccess: async () => {
-      const user = await fetchMe();
-      setUser(user);
-      onLogin({ email, password });
-    },
-    onError: (error) => {
-      console.error("Login error:", error.message);
-    },
-  });
+  const dispatch = useAppDispatch();
+  const [login, { isLoading, error }] = useLoginMutation();
+  const [fetchMe] = useLazyFetchMeQuery();
 
-  const submitHandler = (e: React.FormEvent) => {
+  const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const emailError = email.trim() === "";
     const passwordError = password.trim() === "";
-
     setErrors({ email: emailError, password: passwordError });
-
     if (emailError || passwordError) return;
 
-    loginMutation.mutate({ email, password });
+    try {
+      await login({ email, password }).unwrap();
+      const me = await fetchMe().unwrap();
+      dispatch(setUser(me));
+      onLogin({ email, password });
+    } catch (err) {
+      // ошибка уже в "error"
+      console.error(err);
+    }
   };
+
+  const errorMessage =
+    (error &&
+      "status" in error &&
+      typeof error.status === "number" &&
+      (error as any).data?.message) ||
+    (error && "error" in error && (error as any).error) ||
+    "";
 
   return (
     <form className={s.form} onSubmit={submitHandler}>
@@ -74,16 +80,10 @@ const LoginForm: FC<LoginFormProps> = ({ onSwitchToRegister, onLogin }) => {
         />
       </div>
 
-      {loginMutation.isError && (
-        <div className={s.errorMessage}>{loginMutation.error?.message}</div>
-      )}
+      {errorMessage && <div className={s.errorMessage}>{errorMessage}</div>}
 
-      <button
-        type="submit"
-        className={s.button}
-        disabled={loginMutation.status === "pending"}
-      >
-        {loginMutation.status === "pending" ? "Signing in..." : "Sign In"}
+      <button type="submit" className={s.button} disabled={isLoading}>
+        {isLoading ? "Signing in..." : "Sign In"}
       </button>
 
       <p onClick={onSwitchToRegister} className={s.registerText}>

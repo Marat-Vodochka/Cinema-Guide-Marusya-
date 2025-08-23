@@ -1,20 +1,18 @@
 import { useEffect, useState } from "react";
-import {
-  getRandomMovie,
-  addToFavorites,
-  removeFromFavorites,
-  getFavorites,
-} from "../../../services/movieService";
+import { getRandomMovie } from "../../../services/movieService";
 import type { Movie } from "../../../types/movie";
 import s from "./Hero.module.scss";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
 import IconHeart from "../../../assets/icons/icon-fav.svg?react";
 import IconRefresh from "../../../assets/icons/icon-refresh.svg?react";
-
 import Button from "../../../components/ui/Button/Button";
-import { useUser } from "../../../components/Authorization/UserContext";
+import { useAppSelector } from "../../../app/hooks";
+import {
+  useGetFavoritesQuery,
+  useAddFavoriteMutation,
+  useRemoveFavoriteMutation,
+} from "../../../features/auth/authApi";
 import AuthModal from "../../../components/Authorization/AuthForm";
 import TrailerModal from "../../../components/ui/TrailerModal/TrailerModal";
 
@@ -26,8 +24,16 @@ const Hero = () => {
   const [pendingFavoriteAction, setPendingFavoriteAction] = useState<
     "add" | "remove" | null
   >(null);
-  const { user } = useUser();
+
+  const user = useAppSelector((s) => s.auth.user);
   const navigate = useNavigate();
+
+  // favorites are now handled via RTK Query
+  const { data: favorites = [], refetch: refetchFavorites } =
+    useGetFavoritesQuery(undefined, { skip: !user });
+
+  const [addFavorite] = useAddFavoriteMutation();
+  const [removeFavorite] = useRemoveFavoriteMutation();
 
   const fetchMovie = () => {
     getRandomMovie().then(setMovie);
@@ -37,15 +43,14 @@ const Hero = () => {
     fetchMovie();
   }, []);
 
+  // synchronize favorite status
   useEffect(() => {
     if (user && movie) {
-      getFavorites().then((favs) => {
-        setIsFavorite(favs.some((f) => f.id === movie.id));
-      });
+      setIsFavorite(favorites.some((f) => f.id === movie.id));
     } else {
       setIsFavorite(false);
     }
-  }, [user, movie]);
+  }, [user, movie, favorites]);
 
   const handleFavoriteClick = () => {
     if (!user) {
@@ -53,7 +58,6 @@ const Hero = () => {
       setIsAuthOpen(true);
       return;
     }
-
     performFavoriteAction();
   };
 
@@ -62,14 +66,16 @@ const Hero = () => {
 
     try {
       if (isFavorite) {
-        await removeFromFavorites(movie.id);
+        await removeFavorite(movie.id).unwrap();
         setIsFavorite(false);
         toast.success("Movie removed from favorites");
       } else {
-        await addToFavorites(movie.id);
+        await addFavorite(movie.id).unwrap();
         setIsFavorite(true);
         toast.success("Movie added to favorites");
       }
+      // refresh favorites list
+      if (user) refetchFavorites();
     } catch (error) {
       toast.error("Error updating favorites");
     }
@@ -83,14 +89,10 @@ const Hero = () => {
     }
   };
 
-  const handleTrailerClick = () => {
-    setIsTrailerOpen(true);
-  };
+  const handleTrailerClick = () => setIsTrailerOpen(true);
 
   const handleAboutClick = () => {
-    if (movie) {
-      navigate(`/movie/${movie.id}`);
-    }
+    if (movie) navigate(`/movie/${movie.id}`);
   };
 
   if (!movie) return <div className={s.hero__loading}>Loading...</div>;
@@ -101,13 +103,19 @@ const Hero = () => {
       ? `${Math.floor(movie.runtime / 60)}h ${movie.runtime % 60}m`
       : "";
 
+  // округляем рейтинг до десятых (7.86 -> 7.9)
+  const roundedRating =
+    movie.tmdbRating !== undefined && movie.tmdbRating !== null
+      ? (Math.round(Number(movie.tmdbRating) * 10) / 10).toFixed(1)
+      : "";
+
   return (
     <section className={s.hero}>
       <div className={s.hero__content}>
         <div className={s.hero__info}>
           <div className={s.hero__wrapper}>
             <div className={s.hero__meta}>
-              <span className={s.hero__rating}>★ {movie.tmdbRating}</span>
+              <span className={s.hero__rating}>★ {roundedRating}</span>
               <span className={s.hero__year}>{releaseYear}</span>
               <span className={s.hero__genres}>{movie.genres.join(", ")}</span>
               {duration && <span className={s.hero__duration}>{duration}</span>}

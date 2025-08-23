@@ -1,42 +1,57 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import s from "./AccountPage.module.scss";
-import api from "../../services/api";
 import type { Movie } from "../../types/movie";
-import { useUser } from "../../components/Authorization/UserContext";
+
 import IconUser from "../../assets/icons/icon-user.svg?react";
 import IconMail from "../../assets/icons/icon-email.svg?react";
 import IconFav from "../../assets/icons/icon-fav.svg?react";
 import IconClose from "../../assets/icons/icon-close.svg?react";
-import { removeFromFavorites } from "../../services/movieService";
-import { logout } from "../../services/User";
+
+// ✅ Redux + RTK Query
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import {
+  useGetFavoritesQuery,
+  useRemoveFavoriteMutation,
+  useLogoutMutation,
+} from "../../features/auth/authApi";
+import { logoutLocally } from "../../features/auth/authSlice";
 
 const AccountPage = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  // пользователь из Redux
+  const user = useAppSelector((s) => s.auth.user);
+
+  // избранное через RTK Query (тип: Movie[])
+  const { data: favs = [], isLoading: favLoading } = useGetFavoritesQuery();
+
+  const [removeFav] = useRemoveFavoriteMutation();
+  const [doLogout] = useLogoutMutation();
+
+  // локальный стейт для мгновенного удаления карточки
   const [favoriteMovies, setFavoriteMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
-  const { user, setUser } = useUser();
-  const navigate = useNavigate();
+
   const [activeTab, setActiveTab] = useState<"favorites" | "settings">(
     "favorites"
   );
 
   useEffect(() => {
-    api
-      .get("/favorites")
-      .then((res) => {
-        if (Array.isArray(res.data)) {
-          setFavoriteMovies(res.data);
-        } else {
-          setFavoriteMovies([]);
-        }
-      })
-      .finally(() => setLoading(false));
-  }, []);
+    setFavoriteMovies(favs);
+    setLoading(favLoading);
+  }, [favs, favLoading]);
 
   const handleLogout = async () => {
-    await logout();
-    setUser(null);
-    navigate("/");
+    try {
+      await doLogout().unwrap(); // серверная сессия
+    } catch {
+      // игнорируем — локально всё равно разлогинимся
+    } finally {
+      dispatch(logoutLocally());
+      navigate("/");
+    }
   };
 
   if (loading)
@@ -52,6 +67,7 @@ const AccountPage = () => {
     <div className={s.container}>
       <div className={s.wrapper}>
         <h1 className={s.title}>My Account</h1>
+
         <div className={s.tabs}>
           <button
             className={activeTab === "favorites" ? s.tabActive : s.tab}
@@ -75,12 +91,13 @@ const AccountPage = () => {
           <div className={s.userInfo}>
             <div className={s.infoRow}>
               <div className={s.avatar}>
-                {user?.name?.slice(0, 2).toUpperCase() || "U"}
+                {(user?.name ?? user?.email ?? "U").slice(0, 2).toUpperCase()}
               </div>
               <div>
                 <div className={s.label}>Full Name</div>
                 <div className={s.value}>
-                  {user?.name} {user?.surname}
+                  {(user?.name || "") +
+                    (user?.surname ? ` ${user?.surname}` : "")}
                 </div>
               </div>
             </div>
@@ -111,12 +128,15 @@ const AccountPage = () => {
                   />
                   <button
                     className={s.removeBtn}
-                    onClick={() => {
-                      removeFromFavorites(movie.id).then(() => {
-                        setFavoriteMovies(
-                          favoriteMovies.filter((m) => m.id !== movie.id)
+                    onClick={async () => {
+                      try {
+                        await removeFav(String(movie.id)).unwrap();
+                        setFavoriteMovies((prev) =>
+                          prev.filter((m) => m.id !== movie.id)
                         );
-                      });
+                      } catch {
+                        // можно показать уведомление об ошибке
+                      }
                     }}
                     aria-label="Remove from favorites"
                   >
@@ -124,6 +144,9 @@ const AccountPage = () => {
                   </button>
                 </div>
               ))}
+              {favoriteMovies.length === 0 && (
+                <div className={s.status}>No favorites yet</div>
+              )}
             </div>
           </div>
         )}

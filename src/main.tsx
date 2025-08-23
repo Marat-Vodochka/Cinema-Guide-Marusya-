@@ -1,21 +1,17 @@
+// src/main.tsx
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-// import "./main.css";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter } from "react-router-dom";
-import { UserProvider } from "./components/Authorization/UserContext";
-
-const queryClient = new QueryClient();
+import { Provider } from "react-redux";
+import { store } from "./app/store";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
+    <Provider store={store}>
       <BrowserRouter>
-        <UserProvider>
-          <App />
-        </UserProvider>
+        <App />
       </BrowserRouter>
-    </QueryClientProvider>
+    </Provider>
   </React.StrictMode>
 );

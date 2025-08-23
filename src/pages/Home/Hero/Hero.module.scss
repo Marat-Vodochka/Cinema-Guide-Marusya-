@@ -1,14 +1,18 @@
 .hero {
   position: relative;
-  min-height: 552px;
   background-size: cover;
   background-position: center;
   border-radius: 16px;
   overflow: hidden;
   color: #fff;
+  padding: 0 16px;
 
   @media (max-width: 767px) {
     min-height: auto;
+  }
+
+  @media (min-width: 768px) {
+    padding: 0 32px;
   }
 
   &__loading {
@@ -23,9 +27,9 @@
     z-index: 1;
     display: flex;
     width: 100%;
-    justify-content: space-between; // ИЗМЕНИТЬ: было space-evenly
+    justify-content: space-between;
     align-items: center;
-    gap: 40px;
+    gap: clamp(24px, 4vw, 40px); /* было 40px, теперь резина */
 
     @media (max-width: 767px) {
       flex-direction: column;
@@ -33,12 +37,14 @@
     }
   }
 
+  /* ===== ЛЕВАЯ КОЛОНКА (текст) — «резина» по ширине ===== */
   &__info {
-    flex: 1; // ИЗМЕНИТЬ: вместо max-width: 600px
-    max-width: 500px; // Ограничиваем ширину текста
+    flex: 1 1 auto;
+    /* было: max-width: 500px; теперь плавно 320–560 в зависимости от ширины экрана */
+    max-width: clamp(320px, 42vw, 560px);
 
     @media (max-width: 767px) {
-      order: 2;   
+      order: 2;
       width: 100%;
       max-width: none;
     }
@@ -48,23 +54,23 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
-    
+
     @media (max-width: 767px) {
       gap: 12px;
     }
   }
 
+  /* ===== МЕТА ===== */
   &__meta {
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
-    font-size: 14px;
+    font-size: clamp(12px, 1.3vw, 14px); /* было 14px + медиа, теперь плавно */
     opacity: 0.9;
     align-items: center;
 
     @media (max-width: 767px) {
       gap: 12px;
-      font-size: 13px;
     }
   }
 
@@ -82,27 +88,19 @@
     opacity: 0.9;
   }
 
+  /* ===== ТИТУЛЫ/ТЕКСТЫ — плавные размеры ===== */
   &__title {
-    font-size: 36px;
+    font-size: clamp(28px, 3.5vw, 36px); /* было 36 / 28 */
     font-weight: 700;
     line-height: 1.2;
-
-    @media (max-width: 767px) {
-      font-size: 28px;
-    }
   }
 
   &__description {
-    font-size: 16px;
+    font-size: clamp(14px, 1.6vw, 16px); /* было 16 / 14 */
     line-height: 1.4;
-    margin-bottom: 24px;
+    margin-bottom: clamp(16px, 2.2vw, 24px);
     opacity: 0.95;
     color: rgba(255, 255, 255, 0.9);
-
-    @media (max-width: 767px) {
-      font-size: 14px;
-      margin-bottom: 20px;
-    }
   }
 
   &__buttons {
@@ -112,7 +110,7 @@
 
     @media (max-width: 767px) {
       align-items: stretch;
-          flex-direction: column;
+      flex-direction: column;
     }
   }
 
@@ -128,6 +126,7 @@
     }
   }
 
+  /* ===== КНОПКИ — НЕ ТРОГАЕМ ===== */
   &__btn {
     display: inline-flex;
     align-items: center;
@@ -192,17 +191,24 @@
     }
   }
 
+  /* ===== ПРАВАЯ КОЛОНКА (постер) — «резина» по ширине, без фикс. высоты ===== */
   &__posterWrapper {
     flex-shrink: 0;
     border-radius: 16px;
     overflow: hidden;
-    width: 680px;
-    height: 500px;
+
+    /* было: width: 680px; height: 500px;
+       теперь ширина плавно 300–680, высоту считаем из aspect-ratio */
+    width: clamp(300px, 45vw, 680px);
+    aspect-ratio: 4 / 3;
+    height: auto;
+    max-width: 100%;
 
     @media (max-width: 767px) {
       order: 1;
       width: 100%;
-      height: 300px;
+      max-width: 100%;
+      /* высота сама посчитается из aspect-ratio */
     }
   }
 
@@ -211,5 +217,10 @@
     height: 100%;
     object-fit: cover;
     display: block;
+  }
+
+  &__title,
+  &__description {
+    word-break: break-word;
   }
 }
