@@ -11,7 +11,6 @@ import { login, fetchMe } from "../services/User";
 import type { LoginData } from "../components/Authorization/LoginForm/LoginForm";
 import type { User } from "../services/User";
 
-// ⬇️ локальный тип
 type RegisterDataForAuth = {
   email: string;
   password: string;
@@ -32,14 +31,15 @@ const BaseLayout = () => {
 
   const closeAuthModal = () => setIsAuthModalOpen(false);
 
-  const handleLogin = async (data: LoginData) => {
+  const handleLogin = async (data?: LoginData) => {
+    if (!data) return;
     try {
       await login(data);
       const profile = await fetchMe();
       setUser(profile);
       closeAuthModal();
     } catch (error) {
-      console.error("Ошибка входа:", error);
+      console.error("Login error:", error);
     }
   };
 

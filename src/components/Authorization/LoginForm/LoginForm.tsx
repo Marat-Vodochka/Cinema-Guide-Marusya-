@@ -43,7 +43,7 @@ const LoginForm: FC<LoginFormProps> = ({ onSwitchToRegister, onLogin }) => {
       dispatch(setUser(me));
       onLogin({ email, password });
     } catch (err) {
-      // ошибка уже в "error"
+      // "error"
       console.error(err);
     }
   };
