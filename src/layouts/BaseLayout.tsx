@@ -31,10 +31,9 @@ const BaseLayout = () => {
 
   const closeAuthModal = () => setIsAuthModalOpen(false);
 
-  const handleLogin = async (data?: LoginData) => {
-    if (!data) return;
+  const handleLogin = async (_data: LoginData) => {
+    void _data; // помечаем как намеренно неиспользуемый
     try {
-      await login(data);
       const profile = await fetchMe();
       setUser(profile);
       closeAuthModal();

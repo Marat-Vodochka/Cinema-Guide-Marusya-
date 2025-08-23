@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import type { FC } from "react";
 import s from "../LoginForm/LoginForm.module.scss";
-import LogoBlack from "../../../assets/icons/icon-marusya-dark.svg";
+import LogoBlack from "../../../../public/icon-marusya-dark.svg";
 import EmailIcon from "../../../assets/icons/icon-email.svg?react";
 import PasswordIcon from "../../../assets/icons/icon-password.svg?react";
 import FormField from "../../ui/FormField/FormField";
@@ -17,7 +17,7 @@ export type LoginData = { email: string; password: string };
 
 type LoginFormProps = {
   onSwitchToRegister: () => void;
-  onLogin: (data?: LoginData) => void;
+  onLogin: (data: LoginData) => void;
 };
 
 const LoginForm: FC<LoginFormProps> = ({ onSwitchToRegister, onLogin }) => {

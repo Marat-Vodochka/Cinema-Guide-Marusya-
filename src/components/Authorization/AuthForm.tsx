@@ -7,7 +7,7 @@ import RegisterForm from "./RegisterForm/RegisterForm";
 type AuthFormProps = {
   isOpen: boolean;
   onClose: () => void;
-  onLogin: (data?: LoginData) => void; // ок, возвращаем void
+  onLogin: (data: LoginData) => void; // ок, возвращаем void
   onRegister: (data: RegisterDataForAuth) => void;
 };
 
@@ -24,10 +24,8 @@ const AuthForm = ({ isOpen, onClose, onLogin, onRegister }: AuthFormProps) => {
 
         {isLogin ? (
           <LoginForm
-            onLogin={(data) => {
-              void onLogin(data);
-            }} // вызываем проп onLogin
-            onSwitchToRegister={() => setIsLogin(false)} // переключаем локальный стейт
+            onLogin={onLogin}
+            onSwitchToRegister={() => setIsLogin(false)}
           />
         ) : (
           <RegisterForm
