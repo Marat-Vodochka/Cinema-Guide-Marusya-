@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import type { FC } from "react";
 import s from "../LoginForm/LoginForm.module.scss";
-// ВАЖНО: не импортируем из public, просто используем путь ниже в <img src="/...">
+// логотип из public
 import EmailIcon from "../../../assets/icons/icon-email.svg?react";
 import PasswordIcon from "../../../assets/icons/icon-password.svg?react";
 import FormField from "../../ui/FormField/FormField";
@@ -18,13 +18,15 @@ export type LoginData = { email: string; password: string };
 type LoginFormProps = {
   onSwitchToRegister: () => void;
   onLogin: (data: LoginData) => void; // родитель ожидает void — ок
-  externalError?: string | null; // ошибка сверху (например, если /me вернул 401)
+  externalError?: string | null; // ошибка сверху
+  onClose?: () => void; // ⤵️ новый проп: закрыть модалку сразу после успеха
 };
 
 const LoginForm: FC<LoginFormProps> = ({
   onSwitchToRegister,
   onLogin,
   externalError,
+  onClose,
 }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -46,10 +48,10 @@ const LoginForm: FC<LoginFormProps> = ({
       await login({ email, password }).unwrap();
       const me = await fetchMe().unwrap();
       dispatch(setUser(me));
-      onLogin({ email, password }); // родителю не важно, что мы тут делаем — он вернёт void
+      onLogin({ email, password });
+      onClose?.(); // ⤵️ сразу закрываем модалку
     } catch (err) {
       console.error(err);
-      // локальную ошибку показываем ниже через errorMessage
     }
   };
 

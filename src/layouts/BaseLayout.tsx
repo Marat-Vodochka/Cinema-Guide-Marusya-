@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
@@ -35,15 +35,23 @@ const BaseLayout = () => {
 
   const closeAuthModal = () => setIsAuthModalOpen(false);
 
+  // ⤵️ Авто-закрытие модалки как только пользователь появился (фиксы для iOS)
+  useEffect(() => {
+    if (user && isAuthModalOpen) {
+      setIsAuthModalOpen(false);
+      setAuthMode("login");
+      setAuthError(null);
+    }
+  }, [user, isAuthModalOpen]);
+
   // возвращаем void в пропсы (оборачиваем при передаче), принимаем LoginData
   const handleLogin = async (_data: LoginData) => {
-    void _data; // намеренно не используем, чтобы не ругался TS/ESLint
+    void _data; // намеренно не используем
     setAuthError(null);
     try {
-      // если кука/сессия поставилась — профиль придёт
       const profile = await fetchMe();
       setUser(profile);
-      closeAuthModal();
+      closeAuthModal(); // обычное закрытие (дополнено авто-закрытием через useEffect)
     } catch (e) {
       console.error("Login error:", e);
       setAuthError(
@@ -75,12 +83,12 @@ const BaseLayout = () => {
       <Modal isOpen={isAuthModalOpen} onClose={closeAuthModal}>
         {authMode === "login" && (
           <LoginForm
-            // важна обёртка, чтобы вернуть именно void (а не Promise<void>)
             onLogin={(data) => {
               void handleLogin(data);
-            }}
+            }} // обёртка -> возвращаем void
             onSwitchToRegister={() => setAuthMode("register")}
             externalError={authError}
+            onClose={closeAuthModal} // ⤵️ закрываем сразу из формы после успеха
           />
         )}
         {authMode === "register" && (

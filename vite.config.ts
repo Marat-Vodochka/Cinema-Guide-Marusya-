@@ -8,21 +8,16 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        // Убираем api - эта опция не поддерживается в текущей версии
         charset: false,
         quietDeps: true,
       },
     },
   },
   build: {
-    // Собираем все CSS в один файл для надежности
     cssCodeSplit: false,
-    // Настройки Rollup для правильной сборки CSS
     rollupOptions: {
       output: {
-        // Убираем разделение chunks для CSS
         manualChunks: undefined,
-        // Настройки именования файлов
         assetFileNames: (assetInfo) => {
           if (assetInfo.name && assetInfo.name.endsWith(".css")) {
             return "assets/[name]-[hash][extname]";
@@ -31,7 +26,18 @@ export default defineConfig({
         },
       },
     },
-    // Минификация CSS
     cssMinify: true,
+  },
+
+  // ⬇️ ДОБАВЛЕН ПРОКСИ ДЛЯ DEV
+  server: {
+    proxy: {
+      "/api": {
+        target: "https://cinemaguide.skillbox.cc",
+        changeOrigin: true,
+        secure: true,
+        rewrite: (p) => p.replace(/^\/api/, ""),
+      },
+    },
   },
 });

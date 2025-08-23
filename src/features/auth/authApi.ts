@@ -3,7 +3,10 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { LoginCredentials, RegisterPayload, User } from "./types";
 import type { Movie } from "../../types/movie";
 
-const BASE_URL = "/api"; // Vercel rewrite
+const BASE_URL =
+  (import.meta.env.MODE === "production"
+    ? import.meta.env.VITE_API_BASE
+    : "/api") ?? "/api";
 
 export const authApi = createApi({
   reducerPath: "authApi",
