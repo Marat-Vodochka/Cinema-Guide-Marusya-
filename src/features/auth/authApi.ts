@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { LoginCredentials, RegisterPayload, User } from "./types";
 import type { Movie } from "../../types/movie";
 
-const BASE_URL = "https://cinemaguide.skillbox.cc";
+const BASE_URL = "/api"; // Vercel rewrite
 
 export const authApi = createApi({
   reducerPath: "authApi",
