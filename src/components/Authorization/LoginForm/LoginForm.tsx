@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import type { FC } from "react";
 import s from "../LoginForm/LoginForm.module.scss";
-import LogoBlack from "../../../../public/icon-marusya-dark.svg";
+// ВАЖНО: не импортируем из public, просто используем путь ниже в <img src="/...">
 import EmailIcon from "../../../assets/icons/icon-email.svg?react";
 import PasswordIcon from "../../../assets/icons/icon-password.svg?react";
 import FormField from "../../ui/FormField/FormField";
@@ -17,10 +17,15 @@ export type LoginData = { email: string; password: string };
 
 type LoginFormProps = {
   onSwitchToRegister: () => void;
-  onLogin: (data: LoginData) => void;
+  onLogin: (data: LoginData) => void; // родитель ожидает void — ок
+  externalError?: string | null; // ошибка сверху (например, если /me вернул 401)
 };
 
-const LoginForm: FC<LoginFormProps> = ({ onSwitchToRegister, onLogin }) => {
+const LoginForm: FC<LoginFormProps> = ({
+  onSwitchToRegister,
+  onLogin,
+  externalError,
+}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({ email: false, password: false });
@@ -41,10 +46,10 @@ const LoginForm: FC<LoginFormProps> = ({ onSwitchToRegister, onLogin }) => {
       await login({ email, password }).unwrap();
       const me = await fetchMe().unwrap();
       dispatch(setUser(me));
-      onLogin({ email, password });
+      onLogin({ email, password }); // родителю не важно, что мы тут делаем — он вернёт void
     } catch (err) {
-      // "error"
       console.error(err);
+      // локальную ошибку показываем ниже через errorMessage
     }
   };
 
@@ -56,11 +61,15 @@ const LoginForm: FC<LoginFormProps> = ({ onSwitchToRegister, onLogin }) => {
     (error && "error" in error && (error as any).error) ||
     "";
 
+  const combinedError = externalError || errorMessage;
+
   return (
     <form className={s.form} onSubmit={submitHandler}>
       <div className={s.logo_wrapper}>
-        <img src={LogoBlack} alt="Marusya logo black" />
+        {/* public/icon-marusya-dark.svg */}
+        <img src="/icon-marusya-dark.svg" alt="Marusya logo black" />
       </div>
+
       <div className={s.inputContainer}>
         <FormField
           type="email"
@@ -80,7 +89,7 @@ const LoginForm: FC<LoginFormProps> = ({ onSwitchToRegister, onLogin }) => {
         />
       </div>
 
-      {errorMessage && <div className={s.errorMessage}>{errorMessage}</div>}
+      {combinedError && <div className={s.errorMessage}>{combinedError}</div>}
 
       <button type="submit" className={s.button} disabled={isLoading}>
         {isLoading ? "Signing in..." : "Sign In"}

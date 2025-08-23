@@ -24,25 +24,36 @@ const BaseLayout = () => {
   );
   const [user, setUser] = useState<User | null>(null);
 
+  // показываем явную ошибку авторизации в модалке
+  const [authError, setAuthError] = useState<string | null>(null);
+
   const openAuthModal = (mode: "login" | "register" = "login") => {
     setAuthMode(mode);
+    setAuthError(null);
     setIsAuthModalOpen(true);
   };
 
   const closeAuthModal = () => setIsAuthModalOpen(false);
 
+  // возвращаем void в пропсы (оборачиваем при передаче), принимаем LoginData
   const handleLogin = async (_data: LoginData) => {
-    void _data; // помечаем как намеренно неиспользуемый
+    void _data; // намеренно не используем, чтобы не ругался TS/ESLint
+    setAuthError(null);
     try {
+      // если кука/сессия поставилась — профиль придёт
       const profile = await fetchMe();
       setUser(profile);
       closeAuthModal();
     } catch (e) {
       console.error("Login error:", e);
+      setAuthError(
+        "Не удалось войти. Проверь данные или попробуй другой браузер."
+      );
     }
   };
 
   const handleRegister = async ({ email, password }: RegisterDataForAuth) => {
+    setAuthError(null);
     try {
       await login({ email, password });
       const profile = await fetchMe();
@@ -64,10 +75,12 @@ const BaseLayout = () => {
       <Modal isOpen={isAuthModalOpen} onClose={closeAuthModal}>
         {authMode === "login" && (
           <LoginForm
+            // важна обёртка, чтобы вернуть именно void (а не Promise<void>)
             onLogin={(data) => {
               void handleLogin(data);
             }}
             onSwitchToRegister={() => setAuthMode("register")}
+            externalError={authError}
           />
         )}
         {authMode === "register" && (
