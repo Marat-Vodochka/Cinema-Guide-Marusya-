@@ -38,8 +38,8 @@ const BaseLayout = () => {
       const profile = await fetchMe();
       setUser(profile);
       closeAuthModal();
-    } catch (error) {
-      console.error("Login error:", error);
+    } catch (e) {
+      console.error("Login error:", e);
     }
   };
 
@@ -65,7 +65,9 @@ const BaseLayout = () => {
       <Modal isOpen={isAuthModalOpen} onClose={closeAuthModal}>
         {authMode === "login" && (
           <LoginForm
-            onLogin={handleLogin}
+            onLogin={(data) => {
+              void handleLogin(data);
+            }}
             onSwitchToRegister={() => setAuthMode("register")}
           />
         )}
