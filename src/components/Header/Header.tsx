@@ -18,7 +18,7 @@ type User = {
 
 type HeaderProps = {
   onLoginClick: () => void;
-  user?: User | null; // оставил как было, не используем
+  user?: User | null;
 };
 
 const Header = ({ onLoginClick }: HeaderProps) => {

@@ -1,4 +1,3 @@
-// src/features/auth/authSlice.ts
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { User, AuthStatus } from "./types";
 import { authApi } from "./authApi";

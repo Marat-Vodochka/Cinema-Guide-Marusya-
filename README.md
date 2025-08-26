@@ -1,147 +1,185 @@
 # Cinema Guide (Marusya)
 
-A modern and elegant movie discovery web application built with React, TypeScript, and Vite. Discover new movies, explore different genres, and manage your personal favorites collection with a sleek dark interface.
+A modern movie discovery web app built with React, TypeScript, and Vite. Search films, browse by genres, view details, and manage your favorites — all in a clean dark UI.
 
 ![Account Page](./src/assets/screenshots/image-account.png)
 ![Genres Page](./src/assets/screenshots/image-genres.png)
 ![Hero Section](./src/assets/screenshots/image-hero.png)
 ![Top Movies](./src/assets/screenshots/image-topmovies.png)
 
+---
+
 ## ✨ Features
 
-- 🎬 **Random Movie Showcase** - Discover new movies with featured hero section
-- 🔍 **Smart Search** - Real-time movie search with autocomplete suggestions
-- 🎭 **Genre Filtering** - Browse movies by categories and genres
-- ❤️ **Favorites System** - Save and manage your favorite movies
-- 👤 **User Authentication** - Secure login and registration
-- 🎥 **Movie Trailers** - Watch trailers directly in the app
-- 📊 **Detailed Movie Info** - Comprehensive information, ratings, and cast details
-- 📱 **Responsive Design** - Optimized for desktop, tablet, and mobile
+- 🎬 Random featured movie on the home page
+- 🔍 Smart search with suggestions
+- 🎭 Genre filtering
+- ❤️ Favorites management
+- 👤 Authentication (login/register)
+- 🎥 Trailers (when available)
+- 📊 Detailed movie pages
+- 📱 Responsive layout (desktop/tablet/mobile)
+
+---
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: React 18 + TypeScript
-- **Build Tool**: Vite
-- **Styling**: SCSS Modules
-- **Routing**: React Router v6
-- **State Management**: React Context API
-- **HTTP Client**: Axios
-- **Notifications**: React Toastify
-- **Icons**: SVG React Components
+- **Frontend:** React + TypeScript
+- **Build:** Vite
+- **Styles:** SCSS Modules
+- **Routing:** React Router
+- **State:** Redux Toolkit & RTK Query
+- **Icons:** SVGR (`*.svg?react`), static assets from `public/`
+
+---
+
+## ⚙️ API & Auth
+
+- **Backend:** [cinemaguide.skillbox.cc](https://cinemaguide.skillbox.cc)
+- RTK Query uses `credentials: "include"` for cookie-based sessions.
+
+### Main Endpoints
+
+- `POST /auth/login` — log in (sets session cookie)
+- `GET /auth/logout` — log out
+- `POST /user` — register
+- `GET /profile` — current user
+- `GET /favorites` — list favorites
+- `POST /favorites` (id=<movieId>) — add favorite
+- `DELETE /favorites/:movieId` — remove favorite
+
+### Dev Proxy (Vite)
+
+`vite.config.ts` includes a dev proxy for API calls:
+
+```ts
+server: {
+  proxy: {
+    "/api": {
+      target: "https://cinemaguide.skillbox.cc",
+      changeOrigin: true,
+      secure: true,
+      rewrite: (p) => p.replace(/^\/api/, ""),
+    },
+  },
+}
+```
+
+### 🔧 Environment Variables
+
+Create a `.env.local` (not committed to Git):
+
+```
+VITE_API_URL=https://cinemaguide.skillbox.cc
+```
+
+---
 
 ## 📦 Installation
 
-1. **Clone the repository**
-   git clone https://github.com/Marat-Vodochka/vite-vk-marusya.git
-   cd vite-vk-marusya
+```sh
+git clone https://github.com/Marat-Vodochka/vite-vk-marusya.git
+cd vite-vk-marusya
+npm install
+npm run dev
+# Open http://localhost:5173
+```
 
-2. **Install dependencies**
-   npm install
-
-3. **Start development server**
-   npm run dev
-
-4. **Open in browser**
-   Navigate to [http://localhost:5173](http://localhost:5173)
+---
 
 ## 🏗️ Project Structure
 
+```
 src/
-├── assets/ # Icons & screenshots
-├── components/ # UI parts
-├── pages/ # App pages
-├── services/ # API calls
-└── App.tsx # Root component
+├─ app/                 # Redux store, typed hooks
+├─ assets/              # Images, svg (imported in code)
+├─ components/          # UI components
+├─ features/            # Redux slices + RTK Query (e.g., auth)
+├─ layouts/             # Layout components
+├─ pages/               # Route pages
+├─ services/            # Helpers/services
+├─ types/               # Shared TS types
+├─ declarations.d.ts    # Module declarations
+├─ vite-env.d.ts        # Vite env typings
+├─ main.tsx
+└─ App.tsx
+public/                 # Static files
+```
 
-## 🎯 Available Scripts
+---
 
-# Development
+## 🎯 Scripts
 
-npm run dev # Start development server
-npm run build # Build for production
-npm run preview # Preview production build
+- `npm run dev` — Start development server
+- `npm run build` — Build for production
+- `npm run preview` — Preview production build
+- `npm run lint` — Run ESLint
+- `npm run typecheck` — TypeScript type checking
 
-# Code Quality
+---
 
-npm run lint # Run ESLint
-npm run type-check # TypeScript type checking
+## 🧭 State Management
 
-## 🎨 Key Features
+- Global store with Redux Toolkit
+- API layer via RTK Query (auto caching, revalidation)
+- Typed hooks: `useAppDispatch`, `useAppSelector`
 
-### Hero Section
+---
 
-- Random movie showcase with backdrop image
-- Movie details (rating, year, genres, duration)
-- Quick actions: trailer, favorites, movie details
-- Refresh button for new random movie
+## 🎨 UI Highlights
 
-### Search System
+- **Hero Section:** Random movie showcase, details, quick actions
+- **Search:** Real-time suggestions, mobile-optimized modal
+- **Authentication:** Login/register forms, protected routes, persistent sessions
+- **Movie Management:** Add/remove favorites, genre browsing, responsive grids
+- **Design:** Dark theme, adaptive layouts, smooth animations, skeleton loaders, error handling
 
-- Real-time search with live suggestions
-- Movie cards with posters and ratings
-- Direct navigation to movie details
-- Mobile-optimized search modal
-
-### User Authentication
-
-- Login and registration forms
-- Protected routes for favorites
-- Persistent user sessions
-- User profile management
-
-### Movie Management
-
-- Add/remove from favorites
-- Movie details with full information
-- Genre-based browsing
-- Responsive movie grids
-
-## 🌟 Design Highlights
-
-- **Dark Theme**: Modern dark UI with purple accent colors
-- **Responsive Grid**: Adaptive layouts for all screen sizes
-- **Smooth Animations**: Hover effects and page transitions
-- **Loading States**: Skeleton loaders and progress indicators
-- **Error Handling**: User-friendly error messages and fallbacks
+---
 
 ## 🚀 Deployment
 
-### Vercel (Recommended)
+### Vercel
 
-# Deploy to Vercel
-
+```sh
 npm install -g vercel
 vercel --prod
+```
 
 ### Netlify
 
-# Build command: npm run build
+- Build command: `npm run build`
+- Publish directory: `dist`
 
-# Publish directory: dist
+### Manual
 
-### Manual Deployment
-
+```sh
 npm run build
-
 # Upload dist/ folder to your hosting provider
+```
+
+---
 
 ## 📝 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT License — see [LICENSE](LICENSE).
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please open issues or submit pull requests.
+
+---
 
 ## 📧 Contact
 
 **Marat Ryspekov**
 
-- **GitHub**: [@Marat-Vodochka](https://github.com/Marat-Vodochka)
-- **LinkedIn**: [Marat Ryspekov](https://linkedin.com/in/marat-ryspekov)
+- [GitHub](https://github.com/Marat-Vodochka)
+- [LinkedIn](https://linkedin.com/in/marat-ryspekov)
 
 ---
 
 ⭐ **If you like this project, please give it a star on GitHub!**
 
-**Project Link**: [https://github.com/Marat-Vodochka/vite-vk-marusya](https://github.com/Marat-Vodochka/vite-vk-marusya)
-
-```
-
-```
+**Project Link**: [https://github.com/Marat-Vodochka/vite-vk-marusya]

@@ -7,7 +7,7 @@ import RegisterForm from "./RegisterForm/RegisterForm";
 type AuthFormProps = {
   isOpen: boolean;
   onClose: () => void;
-  onLogin: (data: LoginData) => void; // ок, возвращаем void
+  onLogin: (data: LoginData) => void;
   onRegister: (data: RegisterDataForAuth) => void;
 };
 

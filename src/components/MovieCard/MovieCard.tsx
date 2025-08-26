@@ -8,10 +8,16 @@ type MovieCardProps = {
   onAddFavorite?: () => void;
   rank?: number;
   showRank?: boolean;
-  fullWidth?: boolean; // Добавить
+  fullWidth?: boolean;
 };
 
-const MovieCard: FC<MovieCardProps> = ({ movie, rank, showRank, onAddFavorite, fullWidth }) => {
+const MovieCard: FC<MovieCardProps> = ({
+  movie,
+  rank,
+  showRank,
+  onAddFavorite,
+  fullWidth,
+}) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -19,10 +25,11 @@ const MovieCard: FC<MovieCardProps> = ({ movie, rank, showRank, onAddFavorite, f
   };
 
   return (
-    <div className={`${s.card} ${fullWidth ? s.cardFullWidth : ''}`} onClick={handleClick}>
-      {showRank && rank && (
-        <span className={s.card__rank}>{rank}</span>
-      )}
+    <div
+      className={`${s.card} ${fullWidth ? s.cardFullWidth : ""}`}
+      onClick={handleClick}
+    >
+      {showRank && rank && <span className={s.card__rank}>{rank}</span>}
       <div className={s.card__inner}>
         <img
           src={movie.posterUrl}
@@ -31,9 +38,7 @@ const MovieCard: FC<MovieCardProps> = ({ movie, rank, showRank, onAddFavorite, f
           className={s.card__image}
         />
       </div>
-      {onAddFavorite && (
-        <button onClick={onAddFavorite}>В избранное</button>
-      )}
+      {onAddFavorite && <button onClick={onAddFavorite}>В избранное</button>}
     </div>
   );
 };

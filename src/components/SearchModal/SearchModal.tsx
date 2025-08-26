@@ -25,12 +25,12 @@ const SearchModal = ({ isOpen, onClose, onSelect }: SearchModalProps) => {
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setQuery(value);
-    
+
     if (value.length > 2) {
       setLoading(true);
       try {
         const movies = await getMovieByTitle(value);
-        setResults(movies.slice(0, 10)); // Показываем больше результатов на мобильном
+        setResults(movies.slice(0, 10));
       } catch (error) {
         console.error("Search error:", error);
         setResults([]);
@@ -76,9 +76,7 @@ const SearchModal = ({ isOpen, onClose, onSelect }: SearchModalProps) => {
           </button>
         </div>
 
-        {loading && (
-          <div className={s.loading}>Поиск...</div>
-        )}
+        {loading && <div className={s.loading}>Поиск...</div>}
 
         {!loading && query.length > 2 && results.length === 0 && (
           <div className={s.noResults}>Ничего не найдено</div>
@@ -90,26 +88,35 @@ const SearchModal = ({ isOpen, onClose, onSelect }: SearchModalProps) => {
 
         {results.length > 0 && (
           <div className={s.results}>
-            {results.map(movie => (
-              <div 
-                key={movie.id} 
+            {results.map((movie) => (
+              <div
+                key={movie.id}
                 className={s.resultItem}
                 onClick={() => handleSelect(movie)}
               >
-                <img 
-                  src={movie.posterUrl} 
-                  alt={movie.title} 
+                <img
+                  src={movie.posterUrl}
+                  alt={movie.title}
                   className={s.poster}
                 />
                 <div className={s.info}>
                   <div className={s.topRow}>
                     <span className={s.rating}>
-                      ★ {movie.tmdbRating ? Number(movie.tmdbRating).toFixed(1) : "N/A"}
+                      ★{" "}
+                      {movie.tmdbRating
+                        ? Number(movie.tmdbRating).toFixed(1)
+                        : "N/A"}
                     </span>
-                    <span className={s.year}>{movie.releaseDate?.slice(0, 4)}</span>
+                    <span className={s.year}>
+                      {movie.releaseDate?.slice(0, 4)}
+                    </span>
                     <span className={s.genre}>{movie.genres?.join(", ")}</span>
                     <span className={s.duration}>
-                      {movie.runtime ? `${Math.floor(movie.runtime / 60)} ч ${movie.runtime % 60} мин` : ""}
+                      {movie.runtime
+                        ? `${Math.floor(movie.runtime / 60)} ч ${
+                            movie.runtime % 60
+                          } мин`
+                        : ""}
                     </span>
                   </div>
                   <div className={s.title}>{movie.title}</div>

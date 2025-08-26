@@ -8,7 +8,7 @@ import IconMail from "../../assets/icons/icon-email.svg?react";
 import IconFav from "../../assets/icons/icon-fav.svg?react";
 import IconClose from "../../assets/icons/icon-close.svg?react";
 
-// ✅ Redux + RTK Query
+// Redux + RTK Query
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import {
   useGetFavoritesQuery,
@@ -21,16 +21,16 @@ const AccountPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  // пользователь из Redux
+  // user from Redux
   const user = useAppSelector((s) => s.auth.user);
 
-  // избранное через RTK Query (тип: Movie[])
+  // favorites from RTK Query (type: Movie[])
   const { data: favs = [], isLoading: favLoading } = useGetFavoritesQuery();
 
   const [removeFav] = useRemoveFavoriteMutation();
   const [doLogout] = useLogoutMutation();
 
-  // локальный стейт для мгновенного удаления карточки
+  // local state for instant card removal
   const [favoriteMovies, setFavoriteMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -45,9 +45,9 @@ const AccountPage = () => {
 
   const handleLogout = async () => {
     try {
-      await doLogout().unwrap(); // серверная сессия
+      await doLogout().unwrap(); // server session
     } catch {
-      // игнорируем — локально всё равно разлогинимся
+      // ignore - still log out locally
     } finally {
       dispatch(logoutLocally());
       navigate("/");
@@ -135,7 +135,7 @@ const AccountPage = () => {
                           prev.filter((m) => m.id !== movie.id)
                         );
                       } catch {
-                        // можно показать уведомление об ошибке
+                        // ignore error
                       }
                     }}
                     aria-label="Remove from favorites"

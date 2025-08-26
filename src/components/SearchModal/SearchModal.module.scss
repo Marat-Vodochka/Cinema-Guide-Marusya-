@@ -11,14 +11,14 @@
   z-index: 1000;
 
   @media (max-width: 768px) {
-    background: #1A1A1A; // Полностью темный фон на мобильном
+    background: #1a1a1a;
     align-items: flex-start;
     padding: 0;
   }
 }
 
 .modal {
-  background: #2A2A2A;
+  background: #2a2a2a;
   border-radius: 16px;
   padding: 24px;
   width: 90%;
@@ -27,7 +27,7 @@
   overflow-y: auto;
 
   @media (max-width: 768px) {
-    background: #1A1A1A;
+    background: #1a1a1a;
     border-radius: 0;
     padding: 20px;
     width: 100%;
@@ -53,7 +53,7 @@
 .searchIcon {
   width: 24px;
   height: 24px;
-  fill: #8A92A5;
+  fill: #8a92a5;
   flex-shrink: 0;
 }
 
@@ -67,7 +67,7 @@
   padding: 8px 0;
 
   &::placeholder {
-    color: #8A92A5;
+    color: #8a92a5;
   }
 
   @media (max-width: 768px) {
@@ -79,7 +79,7 @@
 .closeButton {
   background: none;
   border: none;
-  color: #8A92A5;
+  color: #8a92a5;
   font-size: 24px;
   cursor: pointer;
   padding: 4px;
@@ -105,7 +105,7 @@
   gap: 16px;
   padding: 16px;
   border-radius: 12px;
-  background: #2A2A2A;
+  background: #2a2a2a;
   cursor: pointer;
   transition: background 0.2s;
 
@@ -118,7 +118,7 @@
     border-radius: 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     padding: 20px 0;
-    
+
     &:hover {
       background: rgba(255, 255, 255, 0.05);
     }
@@ -172,8 +172,10 @@
   }
 }
 
-.year, .genre, .duration {
-  color: #8A92A5;
+.year,
+.genre,
+.duration {
+  color: #8a92a5;
   font-size: 0.9rem;
 
   @media (max-width: 768px) {
@@ -194,7 +196,7 @@
 }
 
 .description {
-  color: #8A92A5;
+  color: #8a92a5;
   font-size: 0.9rem;
   line-height: 1.4;
   display: -webkit-box;
@@ -210,14 +212,14 @@
 
 .loading {
   text-align: center;
-  color: #8A92A5;
+  color: #8a92a5;
   padding: 40px;
   font-size: 1.1rem;
 }
 
 .noResults {
   text-align: center;
-  color: #8A92A5;
+  color: #8a92a5;
   padding: 40px;
   font-size: 1.1rem;
 
@@ -228,7 +230,7 @@
 
 .emptyState {
   text-align: center;
-  color: #8A92A5;
+  color: #8a92a5;
   padding: 60px 20px;
   font-size: 1.1rem;
 

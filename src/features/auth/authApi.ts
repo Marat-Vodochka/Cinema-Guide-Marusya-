@@ -1,4 +1,3 @@
-// src/features/auth/authApi.ts
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { LoginCredentials, RegisterPayload, User } from "./types";
 import type { Movie } from "../../types/movie";
@@ -30,12 +29,12 @@ export const authApi = createApi({
     }),
 
     // favorites
-    // GET /favorites -> Movie[]
+    // GET /favorites
     getFavorites: builder.query<Movie[], void>({
       query: () => ({ url: "/favorites", method: "GET" }),
     }),
 
-    // POST /favorites (form-urlencoded: id=...) -> User (с обновлённым favorites)
+    // POST /favorites
     addFavorite: builder.mutation<User, string | number>({
       query: (id) => ({
         url: "/favorites",
@@ -45,7 +44,7 @@ export const authApi = createApi({
       }),
     }),
 
-    // DELETE /favorites/{movieId} -> User (с обновлённым favorites)
+    // DELETE
     removeFavorite: builder.mutation<User, string | number>({
       query: (movieId) => ({ url: `/favorites/${movieId}`, method: "DELETE" }),
     }),

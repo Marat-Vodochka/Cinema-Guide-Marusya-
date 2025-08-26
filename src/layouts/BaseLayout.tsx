@@ -24,7 +24,7 @@ const BaseLayout = () => {
   );
   const [user, setUser] = useState<User | null>(null);
 
-  // показываем явную ошибку авторизации в модалке
+  // show auth error
   const [authError, setAuthError] = useState<string | null>(null);
 
   const openAuthModal = (mode: "login" | "register" = "login") => {
@@ -35,7 +35,7 @@ const BaseLayout = () => {
 
   const closeAuthModal = () => setIsAuthModalOpen(false);
 
-  // ⤵️ Авто-закрытие модалки как только пользователь появился (фиксы для iOS)
+  // Auto-close modal as soon as user appears (iOS fixes)
   useEffect(() => {
     if (user && isAuthModalOpen) {
       setIsAuthModalOpen(false);
@@ -44,18 +44,17 @@ const BaseLayout = () => {
     }
   }, [user, isAuthModalOpen]);
 
-  // возвращаем void в пропсы (оборачиваем при передаче), принимаем LoginData
   const handleLogin = async (_data: LoginData) => {
-    void _data; // намеренно не используем
+    void _data;
     setAuthError(null);
     try {
       const profile = await fetchMe();
       setUser(profile);
-      closeAuthModal(); // обычное закрытие (дополнено авто-закрытием через useEffect)
+      closeAuthModal();
     } catch (e) {
       console.error("Login error:", e);
       setAuthError(
-        "Не удалось войти. Проверь данные или попробуй другой браузер."
+        "Couldn’t log in. Please check your credentials or try a different browser."
       );
     }
   };
@@ -68,7 +67,7 @@ const BaseLayout = () => {
       setUser(profile);
       setAuthMode("success");
     } catch (error) {
-      console.error("Ошибка автологина после регистрации:", error);
+      console.error("Error auto-login after registration:", error);
       setAuthMode("success");
     }
   };
@@ -85,10 +84,10 @@ const BaseLayout = () => {
           <LoginForm
             onLogin={(data) => {
               void handleLogin(data);
-            }} // обёртка -> возвращаем void
+            }}
             onSwitchToRegister={() => setAuthMode("register")}
             externalError={authError}
-            onClose={closeAuthModal} // ⤵️ закрываем сразу из формы после успеха
+            onClose={closeAuthModal} //close after successful login
           />
         )}
         {authMode === "register" && (

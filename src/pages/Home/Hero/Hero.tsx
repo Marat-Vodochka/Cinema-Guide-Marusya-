@@ -103,7 +103,7 @@ const Hero = () => {
       ? `${Math.floor(movie.runtime / 60)}h ${movie.runtime % 60}m`
       : "";
 
-  // округляем рейтинг до десятых (7.86 -> 7.9)
+  // round to 1 decimal place
   const roundedRating =
     movie.tmdbRating !== undefined && movie.tmdbRating !== null
       ? (Math.round(Number(movie.tmdbRating) * 10) / 10).toFixed(1)

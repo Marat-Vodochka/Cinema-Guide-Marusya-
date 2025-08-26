@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import s from "./GenresPage.module.scss";
 
-// Маппинг жанров и картинок
+// Images for genres mapping
 const genreImages: Record<string, string> = {
   drama: new URL("../../assets/images/genre/genre-drama.jpg", import.meta.url)
     .href,

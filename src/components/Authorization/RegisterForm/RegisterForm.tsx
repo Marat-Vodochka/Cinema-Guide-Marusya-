@@ -75,7 +75,6 @@ const RegisterForm: FC<RegisterFormProps> = ({
         name: formData.name,
       });
     } catch (err) {
-      // ошибка уже в "error"
       console.error(err);
     }
   };

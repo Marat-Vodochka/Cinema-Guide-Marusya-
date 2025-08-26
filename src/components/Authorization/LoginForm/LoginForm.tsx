@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import type { FC } from "react";
 import s from "../LoginForm/LoginForm.module.scss";
-// логотип из public
 import EmailIcon from "../../../assets/icons/icon-email.svg?react";
 import PasswordIcon from "../../../assets/icons/icon-password.svg?react";
 import FormField from "../../ui/FormField/FormField";
@@ -17,9 +16,9 @@ export type LoginData = { email: string; password: string };
 
 type LoginFormProps = {
   onSwitchToRegister: () => void;
-  onLogin: (data: LoginData) => void; // родитель ожидает void — ок
-  externalError?: string | null; // ошибка сверху
-  onClose?: () => void; // ⤵️ новый проп: закрыть модалку сразу после успеха
+  onLogin: (data: LoginData) => void;
+  externalError?: string | null;
+  onClose?: () => void;
 };
 
 const LoginForm: FC<LoginFormProps> = ({
@@ -49,7 +48,7 @@ const LoginForm: FC<LoginFormProps> = ({
       const me = await fetchMe().unwrap();
       dispatch(setUser(me));
       onLogin({ email, password });
-      onClose?.(); // ⤵️ сразу закрываем модалку
+      onClose?.();
     } catch (err) {
       console.error(err);
     }
@@ -68,7 +67,6 @@ const LoginForm: FC<LoginFormProps> = ({
   return (
     <form className={s.form} onSubmit={submitHandler}>
       <div className={s.logo_wrapper}>
-        {/* public/icon-marusya-dark.svg */}
         <img src="/icon-marusya-dark.svg" alt="Marusya logo black" />
       </div>
 
